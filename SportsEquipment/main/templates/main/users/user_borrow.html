@@ -1,0 +1,53 @@
+{% extends './user_base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block title %}
+    <title>Borrow | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+    <div class="container has-text-centered">
+      <h1 class="">San Beda College Alabang Sports School Equipment</h1>
+      <h1>Student Borrower Information</h1>
+      <div class="columns is-vcentered">
+        <div class="column">
+          <h1>Student No:</h1>
+        </div>
+        <div class="column">
+          <input type="text" class="input" />
+        </div>
+      </div>
+      <div class="columns is-vcentered">
+        <div class="column">
+          <h1>First Name</h1>
+        </div>
+        <div class="column">
+          <input type="text" class="input" />
+        </div>
+      </div>
+      <div class="columns is-vcentered">
+        <div class="column">
+          <h1>Last Name</h1>
+        </div>
+        <div class="column">
+          <input type="text" class="input" />
+        </div>
+      </div>
+      <a href="#">Request Multiple Itmes</a>
+      <div>
+        <div class="button">Request</div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+  </body>
+</html>

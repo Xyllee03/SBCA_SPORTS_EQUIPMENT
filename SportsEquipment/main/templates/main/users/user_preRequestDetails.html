@@ -1,0 +1,72 @@
+{% extends './user_base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>Request Details | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+    <div class="container has-text-centered">
+      <h1>
+        Please check all items' details and information stated are ALL correct.
+        Any mismatched information or item details will NOT be guaranteed,
+        requiring you to submit another request. PLEASE REVIEW TO AVOID
+        INCONVENIENCE.
+      </h1>
+      <h1>Request Details</h1>
+
+      <div class="columns">
+        <div class="column">
+          <h1>Student No:</h1>
+        </div>
+        <div class="column">
+          <h1>-- Student No --</h1>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <h1>Student Name:</h1>
+        </div>
+        <div class="column">
+          <h1>-- Student Name --</h1>
+        </div>
+      </div>
+
+      <h1>Borrowed Items</h1>
+      <div class="columns">
+        <div class="column">
+          <h1>Equipment</h1>
+        </div>
+        <div class="column">
+          <h1>Qty</h1>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h1>-- Equipment Name --</h1>
+        </div>
+        <div class="column">
+          <h1>-- Equipment Quantity--</h1>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div class="button">Edit</div>
+        </div>
+        <div class="column">
+          <div class="button">Request</div>
+        </div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+  </body>
+</html>
