@@ -1,0 +1,54 @@
+{% extends './admin_base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>Admin Request Details | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+    <div class="container has-text-centered">
+      <h1>Request Code#:</h1>
+      <h1>Request Details</h1>
+      <div class="columns">
+        <div class="column"><h1>Student No:</h1></div>
+        <div class="column">
+          <h1>-- Student No --</h1>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column"><h1>Student Name:</h1></div>
+        <div class="column">
+          <h1>-- Student Name --</h1>
+        </div>
+      </div>
+      <h1>Borrowed Items</h1>
+      <div class="columns is-vcentered">
+        <div class="column">
+          <h1>Equipment</h1>
+        </div>
+        <div class="column">
+          <h1>Qty</h1>
+        </div>
+      </div>
+
+      <!-- EQUIPMENT AND QTY -->
+      <div class="columns is-vcentered">
+        <div class="column">
+          <h1>--Equipment--</h1>
+        </div>
+        <div class="column">
+          <h1>--Qty--</h1>
+        </div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+  </body>
+</html>

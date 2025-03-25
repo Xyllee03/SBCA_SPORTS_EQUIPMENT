@@ -26,3 +26,29 @@ def user_equipmentDetails(request):
 def user_preRequestDetails(request):
     context ={}
     return render(request, 'main/users/user_preRequestDetails.html', context)
+
+
+    
+def admin_base(request):
+
+    context ={}
+
+    return render(request,"main/administration_SBCA/admin_base.html", context)
+
+def admin_login(request):
+    context ={}
+
+    return render(request,"main/administration_SBCA/admin_login.html", context)
+
+
+
+def admin_dashboard(request):
+    context ={}
+
+    return render(request,"main/administration_SBCA/admin_dashboard.html", context) 
+
+
+def admin_chkdetails(request):
+    context ={}
+
+    return render(request,"main/administration_SBCA/admin_chk_req.html", context) 
