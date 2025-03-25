@@ -52,3 +52,9 @@ def admin_chkdetails(request):
     context ={}
 
     return render(request,"main/administration_SBCA/admin_chk_req.html", context) 
+
+
+def admin_equipment_details(request):
+    context ={}
+
+    return render(request,"main/administration_SBCA/admin_equipment_details.html", context) 

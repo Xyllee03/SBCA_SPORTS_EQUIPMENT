@@ -12,4 +12,5 @@ urlpatterns = [
     path("admin-login/", views.admin_login, name ="admin_login"),
     path("admin-dashboard/", views.admin_dashboard, name ="admin_dashboard"),
       path("admin-check-request/", views.admin_chkdetails, name ="admin_chkdetails"),
+         path("admin-equipment-details/", views.admin_equipment_details, name ="admin_equipment_details"),
 ]

@@ -1,0 +1,51 @@
+{% extends './admin_base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>Admin Equipment Details | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+    <div class="container has-text-centered">
+      <h1>Equipment Details</h1>
+      <div class="columns">
+        <div class="column">
+          <h1>Equipment</h1>
+        </div>
+        <div class="column">
+          <h1>Borrowed Items</h1>
+        </div>
+        <div class="column">
+          <h1>Available Items</h1>
+        </div>
+        <div class="column"><h1>Total Items</h1></div>
+        <div class="column"><h1>Functions</h1></div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <h1>---Equipment ----</h1>
+        </div>
+        <div class="column">
+          <h1>---Borrowed Items ----</h1>
+          <a href="#">See Details</a>
+        </div>
+        <div class="column">
+          <h1>----Available Items ----</h1>
+        </div>
+        <div class="column"><h1>---- Total Items ----</h1></div>
+        <div class="column"><h1>---- Functions ----</h1></div>
+      </div>
+      <div class="button">Go Back</div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+  </body>
+</html>
