@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -15,11 +16,18 @@ def user_base(request):
     return render(request,"main/users/user_base.html", context)
 
 def user_borrow(request):
+    if(request.method =="POST"):
+        data = json.loads(request.body)
+        print(data)
     context ={}
     return render(request, "main/users/user_borrow.html", context)
 
 
 def user_equipmentDetails(request):
+    if(request.method =="POST"):
+        data = json.loads(request.body)
+        print(data)
+        return JsonResponse({"msg": "User has been retrieve"}, status=200)
     context ={}
     return render(request, "main/users/user_equipmentDetails.html", context)
 
