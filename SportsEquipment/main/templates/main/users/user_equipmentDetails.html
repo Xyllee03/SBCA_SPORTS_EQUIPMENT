@@ -15,40 +15,131 @@
     <!-- //prettier-ignore -->
     <div class="container has-text-centered">
       <h1>Request Equipment</h1>
-      <h1>Add Item</h1>
+      <button id="btn_add_items_equipment" class="button">Add Item</button>
+      <!-- THIS IS START -->
+      <div id="items_container">
+        <div class="columns is-vcentered">
+          <div class="column">
+            <h1>Item 1</h1>
+          </div>
 
-      <div class="columns is-vcentered">
-        <div class="column">
-          <h1>Item 1</h1>
-        </div>
-        <div class="column">
-          <div class="columns">
-            <div class="column">
-              <h1>Equipment Name:</h1>
-            </div>
-            <div class="column">
-              <div class="select">
-                <select>
-                  <option>Basketball</option>
-                  <option>Volleyball</option>
-                </select>
+          <div class="column">
+            <div class="columns">
+              <div class="column">
+                <h1>Equipment Name:</h1>
+              </div>
+              <div class="column">
+                <div class="select">
+                  <select id="inp_equipment_name">
+                    <option>Basketball</option>
+                    <option>Volleyball</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="columns">
-            <div class="column">
-              <h1>Quantity:</h1>
-            </div>
-            <div class="column">
-              <input type="text" class="input" />
+            <div class="columns">
+              <div class="column">
+                <h1>Quantity:</h1>
+              </div>
+              <div class="column">
+                <input type="text" class="input" id="inp_qty" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="button">Request</div>
+      <!-- THIS IS THE END-->
+      <div class="columns">
+        <div class="column">
+          <a class="button" href="{% url 'main:user_borrow' %}">Cancel</a>
+        </div>
+        <div class="column">
+          <div class="button" id="btn_request">Request</div>
+        </div>
+      </div>
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
+
+    <script>
+      //GIVEN
+      //{% block scripts %}
+      let items_container = document.getElementById("items_container");
+      let btn_add_items_equipment = document.getElementById(
+        "btn_add_items_equipment"
+      );
+      let btn_request = document.getElementById("btn_request");
+      let i = 2;
+      btn_add_items_equipment.addEventListener("click", () => {
+        //console.log("this btn add item");
+
+        const newItem = items_container
+          .querySelector(".columns")
+          .cloneNode(true);
+        /*const itemCount =
+          items_container.querySelectorAll(".columns").length + 1; */
+        newItem.querySelector("h1").textContent = `Item ${i}`;
+        newItem.querySelector("#inp_qty").value = "";
+        items_container.appendChild(newItem);
+        i += 1;
+      });
+      btn_request.addEventListener("click", () => {
+        //Given
+        //console.log("arr");
+        let json_data = Validate();
+        let response = fetch("{% url 'main:user_equipmentDetails' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          mode: "same-origin",
+          body: JSON.stringify(json_data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              // If response status is not OK (400, 500, etc.), throw an error
+              return response.json().then((errData) => {
+                throw errData;
+              });
+            }
+            return response.json();
+          })
+          .then((msg) => {
+            console.log("this for getting message");
+            console.log(msg);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+
+      function Validate() {
+        console.log("arr");
+
+        let arr_equipment_name = [];
+        let arr_qty = [];
+        let get_all_equipment_name = document.querySelectorAll(
+          "#inp_equipment_name"
+        );
+        let get_all_qty = document.querySelectorAll("#inp_qty");
+        let dataList = [];
+        for (let i = 0; i < get_all_qty.length; i++) {
+          let data = {
+            Items: {
+              Equipment_name: get_all_equipment_name[i].value,
+              Qty: get_all_qty[i].value,
+            },
+          };
+          dataList.push(data);
+        }
+
+        //console.log(dataList);
+        return dataList;
+      }
+
+      // {% endblock scripts %}
+    </script>
   </body>
 </html>

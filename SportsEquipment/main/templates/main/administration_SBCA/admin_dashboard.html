@@ -1,0 +1,54 @@
+{% extends './admin_base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block title %}
+    <title>Admin Dashboard | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+    <div class="container">
+      <div class="columns has-text-centered is-vcentered">
+        <div class="column">
+          <h1>Item Pending Request</h1>
+          <div>
+            <input type="text" class="input" />
+          </div>
+          <div class="columns is-vcentered">
+            <div class="column">
+              <h1>///CODE</h1>
+            </div>
+            <div class="column">
+              <div class="button">Check</div>
+            </div>
+            <div class="column">
+              <div class="button">Check</div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div>
+            <div class="button">Retrieve Item</div>
+          </div>
+          <div>
+            <div class="button">Equipment</div>
+          </div>
+          <div>
+            <h1>Recent Approve Request</h1>
+            <h1>/// CODE</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+
+    <title>Admin Base</title>
+    {% endblock title %}
+
+    <style>
+      .inherit_width {
+        width: 100%;
+      }
+      /* 
+        {% block styles %}
+
+        {% endblock styles %}
+        */
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="inherit_width">
+          <!-- prettier-ignore -->
+          {% block content %}
+          <!-- //prettier-ignore -->
+
+          <!-- prettier-ignore -->
+          {% endblock content %}
+          <!-- //prettier-ignore -->
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

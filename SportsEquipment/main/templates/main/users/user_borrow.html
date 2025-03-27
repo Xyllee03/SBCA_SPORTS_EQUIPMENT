@@ -30,7 +30,7 @@
           <h1>First Name</h1>
         </div>
         <div class="column">
-          <input type="text" class="input" />
+          <input type="text" class="input" id="inp_first_name" />
         </div>
       </div>
       <div class="columns is-vcentered">
@@ -38,16 +38,53 @@
           <h1>Last Name</h1>
         </div>
         <div class="column">
-          <input type="text" class="input" />
+          <input type="text" class="input" id="inp_last_name" />
         </div>
       </div>
-      <a href="#">Request Multiple Itmes</a>
+      <a href="{% url 'main:user_equipmentDetails' %}"
+        >Request Multiple Items</a
+      >
       <div>
-        <div class="button">Request</div>
+        <div class="button" id="btn_submit">Request</div>
       </div>
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
+    <script>
+      //{% block scripts %}
+
+      //Given
+      let btn_submit = document.getElementById("btn_submit");
+
+      btn_submit.addEventListener("click", () => {
+        let json_data = Validate();
+        let response = fetch("{% url 'main:user_borrow' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          mode: "same-origin",
+          body: JSON.stringify(json_data),
+        });
+      });
+
+      function Validate() {
+        //Given
+        let data = {};
+        let inp_last_name = document.getElementById("inp_last_name").value();
+        let inp_first_name = document.getElementById("inp_first_name").value();
+
+        data = {
+          last_name: inp_last_name,
+          first_name: inp_first_name,
+        };
+
+        return data;
+      }
+
+      //{% endblock scripts %}
+    </script>
   </body>
 </html>
