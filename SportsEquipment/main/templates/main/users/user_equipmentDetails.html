@@ -16,7 +16,9 @@
     <div class="container has-text-centered">
       <h1>Request Equipment</h1>
       <button id="btn_add_items_equipment" class="button">Add Item</button>
+
       <!-- THIS IS START -->
+      {% for data in equipment_details %}
       <div id="items_container">
         <div class="columns is-vcentered">
           <div class="column">
@@ -31,8 +33,10 @@
               <div class="column">
                 <div class="select">
                   <select id="inp_equipment_name">
-                    <option>Basketball</option>
-                    <option>Volleyball</option>
+                    <!-- prettier-ignore -->
+                    <option value="Basketball" {% if data.Items.Equipment_name == "Basketball" %}selected{% endif %}>Basketball</option>
+                    <option value="Volleyball" {% if data.Items.Equipment_name == "Volleyball" %}selected{% endif %}>Volleyball</option>
+                       <!-- //prettier-ignore -->
                   </select>
                 </div>
               </div>
@@ -42,12 +46,13 @@
                 <h1>Quantity:</h1>
               </div>
               <div class="column">
-                <input type="text" class="input" id="inp_qty" />
+                <input type="text" class="input" id="inp_qty" value="{{ data.Items.Qty }}" />
               </div>
             </div>
           </div>
         </div>
       </div>
+      {% endfor %}
       <!-- THIS IS THE END-->
       <div class="columns">
         <div class="column">
@@ -57,6 +62,7 @@
           <div class="button" id="btn_request">Request</div>
         </div>
       </div>
+      <h1 class="has-text-centered" id="err_msg">Error</h1>
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}
@@ -66,17 +72,13 @@
       //GIVEN
       //{% block scripts %}
       let items_container = document.getElementById("items_container");
-      let btn_add_items_equipment = document.getElementById(
-        "btn_add_items_equipment"
-      );
+      let btn_add_items_equipment = document.getElementById("btn_add_items_equipment");
       let btn_request = document.getElementById("btn_request");
       let i = 2;
       btn_add_items_equipment.addEventListener("click", () => {
         //console.log("this btn add item");
 
-        const newItem = items_container
-          .querySelector(".columns")
-          .cloneNode(true);
+        const newItem = items_container.querySelector(".columns").cloneNode(true);
         /*const itemCount =
           items_container.querySelectorAll(".columns").length + 1; */
         newItem.querySelector("h1").textContent = `Item ${i}`;
@@ -88,6 +90,12 @@
         //Given
         //console.log("arr");
         let json_data = Validate();
+        console.log(json_data);
+
+        if (!json_data) {
+          return;
+        }
+
         let response = fetch("{% url 'main:user_equipmentDetails' %}", {
           method: "POST",
           headers: {
@@ -109,6 +117,7 @@
           .then((msg) => {
             console.log("this for getting message");
             console.log(msg);
+            window.location.href = `/${msg.redirect_url}`;
           })
           .catch((err) => {
             console.log(err);
@@ -120,12 +129,22 @@
 
         let arr_equipment_name = [];
         let arr_qty = [];
-        let get_all_equipment_name = document.querySelectorAll(
-          "#inp_equipment_name"
-        );
+        let get_all_equipment_name = document.querySelectorAll("#inp_equipment_name");
         let get_all_qty = document.querySelectorAll("#inp_qty");
+
         let dataList = [];
         for (let i = 0; i < get_all_qty.length; i++) {
+          if (get_all_equipment_name[i].value === "" || get_all_qty[i].value === "") {
+            dataList = false;
+            let err_msg = document.getElementById("err_msg");
+            err_msg.textContent = "Please input all the form";
+            return;
+          }
+          if (!Number.isInteger(parseInt(get_all_qty[i].value))) {
+            let err_msg = document.getElementById("err_msg");
+            err_msg.textContent = "Check if you input a number in the quantity";
+            return;
+          }
           let data = {
             Items: {
               Equipment_name: get_all_equipment_name[i].value,

@@ -22,7 +22,7 @@
           <h1>Student No:</h1>
         </div>
         <div class="column">
-          <input type="text" class="input" />
+          <input type="text" class="input" id="inp_student_no" />
         </div>
       </div>
       <div class="columns is-vcentered">
@@ -41,11 +41,10 @@
           <input type="text" class="input" id="inp_last_name" />
         </div>
       </div>
-      <a href="{% url 'main:user_equipmentDetails' %}"
-        >Request Multiple Items</a
-      >
+      <a href="{% url 'main:user_equipmentDetails' %}">Request Multiple Items</a>
       <div>
         <div class="button" id="btn_submit">Request</div>
+        <div id="err_msg">Error</div>
       </div>
     </div>
     <!-- prettier-ignore -->
@@ -59,6 +58,9 @@
 
       btn_submit.addEventListener("click", () => {
         let json_data = Validate();
+        if (!json_data) {
+          return;
+        }
         let response = fetch("{% url 'main:user_borrow' %}", {
           method: "POST",
           headers: {
@@ -67,20 +69,46 @@
           },
           mode: "same-origin",
           body: JSON.stringify(json_data),
-        });
+        })
+          .then((response) => {
+            if (!response.ok) {
+              // If response status is not OK (400, 500, etc.), throw an error
+              return response.json().then((errData) => {
+                throw errData;
+              });
+            }
+            return response.json();
+          })
+          .then((msg) => {
+            console.log(msg);
+            //   window.location.href = `/${msg.redirect_url}`;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
 
       function Validate() {
         //Given
         let data = {};
-        let inp_last_name = document.getElementById("inp_last_name").value();
-        let inp_first_name = document.getElementById("inp_first_name").value();
-
+        let inp_student_no = document.getElementById("inp_student_no").value;
+        let inp_last_name = document.getElementById("inp_last_name").value;
+        let inp_first_name = document.getElementById("inp_first_name").value;
+        let err_msg = document.getElementById("err_msg");
+        if (inp_last_name === "" || inp_first_name === "") {
+          err_msg.textContent = "Please input all forms";
+          return false;
+        }
+        if (!Number.isInteger(parseInt(inp_student_no))) {
+          err_msg.textContent = "Please Check the student no. make sure its numeber";
+          return false;
+        }
         data = {
           last_name: inp_last_name,
           first_name: inp_first_name,
+          student_no: inp_student_no,
         };
-
+        err_msg.textContent = "";
         return data;
       }
 
