@@ -1,0 +1,128 @@
+{% extends './user_base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>Request Details | SBCA Sports Equipment</title>
+    {% endblock title %}
+
+    <style>
+      /* {% block styles %} */
+      .sty-header-postRD {
+        color: black;
+        font-weight: 800;
+      }
+      .sty-subheader-postRD {
+        color: black;
+        font-weight: 600;
+      }
+      .sty-lbl-postRD {
+        color: black;
+        font-weight: 400;
+      }
+
+      .sty-subheader-mid-postRD {
+        color: black;
+        font-weight: 500;
+      }
+      .sty-lbl-dec-postRD {
+        color: black;
+        text-align: justify;
+        font-weight: 300;
+
+        margin-left: 100px;
+        margin-right: 100px;
+      }
+      /* {% endblock styles %}*/
+    </style>
+  </head>
+
+  <body>
+    <!-- prettier-ignore -->
+    {% block content  %}
+    <!-- //prettier-ignore -->
+    <div class="container has-text-centered sty-container-bkg">
+      <div class="mx-6 pt-6">
+        <h1 class="sty-header-big-fz sty-monstserrat-fm sty-header-postRD">
+          PLEASE TAKE A SCREENSHOT
+        </h1>
+        <h1 class="sty-header-big-fz sty-monstserrat-fm sty-header-postRD">
+          Request Code #{{ Profile.code_request }}
+        </h1>
+        <div>
+          <h1
+            class="sty-header-fz sty-monstserrat-fm sty-subheader-postRD mt-6 mb-3"
+          >
+            REQUEST DETAILS
+          </h1>
+          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
+            <div class="column is-2"></div>
+            <div class="column">
+              <h1>Student No.</h1>
+            </div>
+            <div class="column">
+              <h1 class="sty-lbl-postRD">{{ Profile.student_no }}</h1>
+            </div>
+            <div class="column is-2"></div>
+          </div>
+          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
+            <div class="column is-2"></div>
+            <div class="column">
+              <h1>Student Name.</h1>
+            </div>
+            <div class="column">
+              <h1>{{ Profile.last_name }} {{ Profile.first_name }}</h1>
+            </div>
+            <div class="column is-2"></div>
+          </div>
+        </div>
+        <div>
+          <h1
+            class="sty-lbl-fz-small sty-hind-fm sty-subheader-mid-postRD mt-6"
+          >
+            Borrowed Items
+          </h1>
+          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
+            <div class="column is-2"></div>
+            <div class="column">
+              <h1>Equipment Name</h1>
+            </div>
+            <div class="column">
+              <h1>Qty</h1>
+            </div>
+            <div class="column is-2"></div>
+          </div>
+          {% for equipment in Equipments%}
+          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
+            <div class="column is-2"></div>
+            <div class="column">
+              <h1>{{ equipment.equipment_name }}</h1>
+            </div>
+            <div class="column">
+              <h1>{{ equipment.quantity }}</h1>
+            </div>
+            <div class="column is-2"></div>
+          </div>
+          {% endfor %}
+          <h1 class="sty-lbl-fz-smaller sty-hind-fm sty-lbl-dec-postRD mt-6">
+            Take a screenshot first then proceed to the gym facilities to
+            approve your request. And get your items. DISCLAIMER. doesn’t mean
+            you request you can freely get the items, it must be verified first
+            by the staff the purpose of the request
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content  %}
+    <!-- //prettier-ignore -->
+    <script>
+      //{% block scripts %}
+
+      //{% endblock scripts %}
+    </script>
+  </body>
+</html>

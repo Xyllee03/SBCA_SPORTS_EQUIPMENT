@@ -4,10 +4,12 @@ from . import views
 app_name = "main"
 urlpatterns = [
     path("", views.index, name ="index"),
+      path("user-predata/", views.userpredata, name ="userpredata"),
     path("users-base/", views.user_base, name ="user_base"),
     path("users/borrow/", views.user_borrow, name ="user_borrow"),
     path("users/equipmentDetails/", views.user_equipmentDetails, name ="user_equipmentDetails"),
     path("users/preRequestDetails/", views.user_preRequestDetails, name="user_preRequestDetails"),
+       path("users/postRequestDetails/<str:get_request_code>", views.user_postRequestDetails, name="user_postRequestDetails"),
     path("admin-base/", views.admin_base, name ="admin_base"),
     path("admin-login/", views.admin_login, name ="admin_login"),
     path("admin-dashboard/", views.admin_dashboard, name ="admin_dashboard"),

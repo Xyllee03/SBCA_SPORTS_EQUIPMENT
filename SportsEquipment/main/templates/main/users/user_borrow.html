@@ -9,42 +9,128 @@
     {% block title %}
     <title>Borrow | SBCA Sports Equipment</title>
     {% endblock title %}
+    <style>
+      /*{% block styles%} */
+      .sty-header-ub {
+        color: black;
+        font-weight: 800;
+      }
+      .sty-subheader-ub {
+        color: black;
+        font-weight: 600;
+      }
+
+      .sty-label-inp-ub {
+        color: black;
+        font-weight: 400;
+      }
+      .sty-inp-ub {
+        color: black;
+        border: black solid 1px;
+        background-color: #fefae0;
+        font-size: 22px;
+      }
+      .sty-lbl-req-ub {
+        color: black;
+        text-decoration: underline;
+        font-weight: 300;
+      }
+      .sty-lbl-req-ub:hover {
+        cursor: pointer;
+        color: blue;
+      }
+      .sty-btn-request-ub {
+        background-color: #f25c54;
+        color: #fefae0;
+        width: 215px;
+        border: solid black 3px;
+      }
+      .sty-err-msg {
+        color: red;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      /* {% endblock styles %}*/
+    </style>
   </head>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1 class="">San Beda College Alabang Sports School Equipment</h1>
-      <h1>Student Borrower Information</h1>
+    <div class="container has-text-centered sty-container-bkg p-6">
+      <h1 class="sty-header-fz sty-monstserrat-fm sty-header-ub mb-6">
+        San Beda College Alabang Sports School Equipment
+      </h1>
+      <h1 class="sty-subheader-fz sty-hind-fm sty-subheader-ub mb-3">
+        Student Borrower Information
+      </h1>
       <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Student No:</h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
+            Student No:
+          </h1>
         </div>
         <div class="column">
-          <input type="text" class="input" id="inp_student_no" />
+          <input
+            type="text"
+            class="input sty-inp-ub"
+            id="inp_student_no"
+            value="{{ Profile.student_no }}"
+          />
         </div>
+        <div class="column is-2"></div>
       </div>
       <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>First Name</h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
+            First Name:
+          </h1>
         </div>
         <div class="column">
-          <input type="text" class="input" id="inp_first_name" />
+          <input
+            type="text"
+            class="input sty-inp-ub"
+            id="inp_first_name"
+            value="{{ Profile.first_name}}"
+          />
         </div>
+        <div class="column is-2"></div>
       </div>
       <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Last Name</h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
+            Last Name:
+          </h1>
         </div>
         <div class="column">
-          <input type="text" class="input" id="inp_last_name" />
+          <input
+            type="text"
+            class="input sty-inp-ub"
+            id="inp_last_name"
+            value="{{ Profile.last_name}}"
+          />
         </div>
+        <div class="column is-2"></div>
       </div>
-      <a href="{% url 'main:user_equipmentDetails' %}">Request Multiple Items</a>
+      <div
+        class="sty-lbl-fz-small sty-hind-fm sty-lbl-req-ub mb-6"
+        id="red_preload_data"
+      >
+        Request Multiple Items
+      </div>
+
       <div>
-        <div class="button" id="btn_submit">Request</div>
-        <div id="err_msg">Error</div>
+        <div
+          class="button sty-btn-fz sty-hind-fm sty-btn-request-ub"
+          id="btn_submit"
+        >
+          Request
+        </div>
+        <div id="err_msg" class="sty-err-msg"></div>
       </div>
     </div>
     <!-- prettier-ignore -->
@@ -52,7 +138,40 @@
     <!-- //prettier-ignore -->
     <script>
       //{% block scripts %}
-
+      //PRELOAD
+      let red_preload_data = document.getElementById("red_preload_data");
+      red_preload_data.addEventListener("click", () => {
+        let json_data = Validate();
+        if (!json_data) {
+          return;
+        }
+        let response = fetch("{% url 'main:userpredata' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          mode: "same-origin",
+          body: JSON.stringify(json_data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              // If response status is not OK (400, 500, etc.), throw an error
+              return response.json().then((errData) => {
+                throw errData;
+              });
+            }
+            return response.json();
+          })
+          .then((msg) => {
+            console.log(msg);
+            window.location.href = `/${msg.redirect_url}`;
+          })
+          .catch((err) => {
+            console.log(err);
+            err_msg.textContent = "Please fill up all items";
+          });
+      });
       //Given
       let btn_submit = document.getElementById("btn_submit");
 
@@ -81,10 +200,11 @@
           })
           .then((msg) => {
             console.log(msg);
-            //   window.location.href = `/${msg.redirect_url}`;
+            window.location.href = `/${msg.redirect_url}`;
           })
           .catch((err) => {
             console.log(err);
+            err_msg.textContent = "Please check if you have request items";
           });
       });
 
@@ -100,7 +220,8 @@
           return false;
         }
         if (!Number.isInteger(parseInt(inp_student_no))) {
-          err_msg.textContent = "Please Check the student no. make sure its numeber";
+          err_msg.textContent =
+            "Please Check the student no. make sure its number";
           return false;
         }
         data = {

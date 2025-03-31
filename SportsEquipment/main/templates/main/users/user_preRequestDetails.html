@@ -5,63 +5,135 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block title %}
-    <title>Request Details | SBCA Sports Equipment</title>
+    <title>Pre-Request Details | SBCA Sports Equipment</title>
     {% endblock title %}
   </head>
+  <style>
+    /* {% block styles %} */
+    .sty-lbl-desc-preRD {
+      color: black;
+      font-weight: 400;
+      margin-left: 99px;
+      margin-right: 99px;
+      text-align: justify;
+    }
+    .sty-header-preRD {
+      color: black;
+      font-weight: 800;
+    }
+    .sty-lbl-subheader-preRD {
+      color: black;
+      font-weight: 400;
+    }
+    .sty-mid-lbl-subheader-preRD {
+      color: black;
+      font-weight: 600;
+    }
+    .sty-btn-cancel-preRD {
+      color: #fefae0;
+      background-color: #f25c54;
+      border: black solid 3px;
+      width: 220px;
+      font-weight: 600;
+    }
+    .sty-btn-request-preRD {
+      color: black;
+      background-color: #79f254;
+      border: black solid 3px;
+      width: 220px;
+      font-weight: 600;
+    }
+    /* {% endblock styles %} */
+  </style>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>
-        Please check all items' details and information stated are ALL correct.
-        Any mismatched information or item details will NOT be guaranteed,
-        requiring you to submit another request. PLEASE REVIEW TO AVOID
-        INCONVENIENCE.
-      </h1>
-      <h1>Request Details</h1>
+    <div class="container has-text-centered sty-container-bkg">
+      <div class="mx-6 pt-6">
+        <h1 class="sty-lbl-fz-smaller sty-hind-fm sty-lbl-desc-preRD">
+          Please check all items' details and information stated are ALL
+          correct. Any mismatched information or item details will NOT be
+          guaranteed, requiring you to submit another request. PLEASE REVIEW TO
+          AVOID INCONVENIENCE.
+        </h1>
+        <h1 class="sty-header-fz sty-header-preRD my-5">Request Details</h1>
 
-      <div class="columns">
-        <div class="column">
-          <h1>Student No:</h1>
+        <div class="columns sty-lbl-fz-small sty-hind-fm">
+          <div class="column is-2"></div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">Student No:</h1>
+          </div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">{{ Profile.student_no }}</h1>
+          </div>
+          <div class="column is-2"></div>
         </div>
-        <div class="column">
-          <h1>-- Student No --</h1>
-        </div>
-      </div>
 
-      <div class="columns">
-        <div class="column">
-          <h1>Student Name:</h1>
+        <div class="columns sty-lbl-fz-small sty-hind-fm">
+          <div class="column is-2"></div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">Student Name:</h1>
+          </div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">
+              {{ Profile.last_name }} {{ Profile.first_name }}
+            </h1>
+          </div>
+          <div class="column is-2"></div>
         </div>
-        <div class="column">
-          <h1>-- Student Name --</h1>
-        </div>
-      </div>
 
-      <h1>Borrowed Items</h1>
-      <div class="columns">
-        <div class="column">
-          <h1>Equipment</h1>
+        <h1
+          class="sty-lbl-fz-small sty-hind-fm mt-6 sty-mid-lbl-subheader-preRD"
+        >
+          Borrowed Items
+        </h1>
+        <div class="columns sty-lbl-fz-small sty-hind-fm">
+          <div class="column is-2"></div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">Equipment</h1>
+          </div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD">Qty</h1>
+          </div>
+          <div class="column is-2"></div>
         </div>
-        <div class="column">
-          <h1>Qty</h1>
+        <!-- prettier-ignore -->
+        {% for equip_data in Equipment_Details %}
+        <!-- //prettier-ignore -->
+        <div class="columns sty-lbl-fz-small sty-hind-fm">
+          <div class="column is-2"></div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD" id="inp_equipment_names">
+              {{ equip_data.Items.Equipment_name }}
+            </h1>
+          </div>
+          <div class="column">
+            <h1 class="sty-lbl-subheader-preRD" id="inp_qtys">
+              {{ equip_data.Items.Qty }}
+            </h1>
+          </div>
+          <div class="column is-2"></div>
         </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <h1>-- Equipment Name --</h1>
-        </div>
-        <div class="column">
-          <h1>-- Equipment Quantity--</h1>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <div class="button">Edit</div>
-        </div>
-        <div class="column">
-          <div class="button">Request</div>
+        {% endfor %}
+        <div class="columns mt-5">
+          <div class="column is-3"></div>
+          <div class="column">
+            <a
+              class="button sty-btn-fz sty-roboto-fm sty-btn-cancel-preRD"
+              href="{% url 'main:user_borrow' %}"
+              >Edit</a
+            >
+          </div>
+          <div class="column">
+            <div
+              class="button sty-btn-fz sty-roboto-fm sty-btn-request-preRD"
+              id="btn_request"
+            >
+              Request
+            </div>
+          </div>
+          <div class="column is-3"></div>
         </div>
       </div>
     </div>
@@ -69,4 +141,60 @@
     {% endblock content %}
     <!-- //prettier-ignore -->
   </body>
+  <script>
+    //{% block scripts %}
+    let btn_request = document.getElementById("btn_request");
+
+    btn_request.addEventListener("click", () => {
+      let json_data = Validate();
+      if (!json_data) {
+        return;
+      }
+      console.log(json_data);
+
+      // DOUBLE DATA
+
+      let response = fetch("{% url 'main:user_preRequestDetails' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        mode: "same-origin",
+        body: JSON.stringify(json_data),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((msg) => {
+          console.log(msg);
+          window.location.href = `/${msg.redirect_url}`;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+
+    function Validate() {
+      let all_inp_equipment_names = document.querySelectorAll(
+        "#inp_equipment_names"
+      );
+      let all_inp_qtys = document.querySelectorAll("#inp_qtys");
+      console.log(all_inp_equipment_names);
+      let dataList = [];
+
+      for (let i = 0; i < all_inp_qtys.length; i++) {
+        let data = {
+          Items: {
+            Equipment_name: all_inp_equipment_names[i].textContent.trim(),
+            Qty: all_inp_qtys[i].textContent.trim(),
+          },
+        };
+        dataList.push(data);
+      }
+
+      return dataList;
+    }
+    //{% endblock scripts %}
+  </script>
 </html>

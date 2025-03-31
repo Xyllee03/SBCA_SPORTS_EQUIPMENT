@@ -9,12 +9,11 @@ class StudentBorrow(models.Model):
     student_no = models.IntegerField()
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    
+    code_request = models.CharField(max_length=20, blank=True, null=True)
 
 class ItemRequest(models.Model):
     id = models.AutoField(primary_key=True)
     equipment_name = models.CharField(max_length=255)
-    code_request = models.CharField(max_length=20, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     id_student_borrow = models.ForeignKey(StudentBorrow, on_delete=models.CASCADE)
     

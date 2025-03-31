@@ -8,62 +8,219 @@
     {% block title %}
     <title>Equipment Details | SBCA Sports Equipment</title>
     {% endblock title %}
+
+    <style>
+      /*{% block styles %} */
+      .sty-header-RE {
+        color: black;
+        font-weight: 800;
+      }
+      .sty-subheader-RE {
+        color: black;
+        font-weight: 400;
+        text-decoration: underline;
+        font-style: italic;
+      }
+      .sty-lbl-inp {
+        font-weight: 300;
+        color: black;
+      }
+      .sty-lbl-items {
+        font-weight: 500;
+        color: black;
+      }
+      .sty-inp-drp-equipdetails-RE {
+        background-color: #fefae0 !important;
+        width: 100%;
+        font-size: 22px;
+      }
+      .sty-inp-drp-equipdetails-RE select {
+        width: 100%;
+        background-color: #fefae0 !important;
+      }
+      .sty-btn-submit-RE {
+        width: 200px;
+        height: 50px;
+        border: solid black 3px;
+        color: #fefae0;
+        background-color: #f25c54;
+      }
+      .sty-err-RE {
+        color: red;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      /*{% endblock styles %} */
+    </style>
   </head>
+
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>Request Equipment</h1>
-      <button id="btn_add_items_equipment" class="button">Add Item</button>
+    <div class="container has-text-centered sty-container-bkg p-6">
+      <div class="columns is-vcentered mb-6">
+        <div class="column is-2">
+          <div class="has-text-centered">
+            <div class="button sty-btn-fz" id="btn_del_items_request">
+              <ion-icon name="trash"></ion-icon>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <h1 class="sty-header-fz sty-monstserrat-fm sty-header-RE">
+            Request Equipment
+          </h1>
+          <button
+            id="btn_add_items_equipment"
+            class="sty-lbl-fz-smaller sty-roboto-fm sty-subheader-RE"
+          >
+            Add Item
+          </button>
+        </div>
+        <div class="column is-2"></div>
+      </div>
 
       <!-- THIS IS START -->
-      {% for data in equipment_details %}
+      <!-- prettier-ignore -->
+      {% if equipment_details %}
       <div id="items_container">
-        <div class="columns is-vcentered">
-          <div class="column">
-            <h1>Item 1</h1>
+        {% for data in equipment_details %}
+
+        <!-- //prettier-ignore -->
+
+        <div class="columns is-vcentered" id="each_items">
+          <div class="column is-2">
+            <h1
+              class="sty-lbl-fz-small sty-lbl-items sty-hind-fm"
+              id="item_count"
+            >
+              Item {{ forloop.counter }}
+            </h1>
           </div>
 
           <div class="column">
             <div class="columns">
               <div class="column">
-                <h1>Equipment Name:</h1>
+                <h1 class="sty-lbl-fz-small sty-hind-fm sty-lbl-inp">
+                  Equipment Name:
+                </h1>
               </div>
               <div class="column">
-                <div class="select">
-                  <select id="inp_equipment_name">
-                    <!-- prettier-ignore -->
+                <div class="select sty-hind-fm sty-inp-drp-equipdetails-RE" >
+                  <select id="inp_equipment_name" style="font-weight: 700;" >
+                
                     <option value="Basketball" {% if data.Items.Equipment_name == "Basketball" %}selected{% endif %}>Basketball</option>
                     <option value="Volleyball" {% if data.Items.Equipment_name == "Volleyball" %}selected{% endif %}>Volleyball</option>
-                       <!-- //prettier-ignore -->
+                    <option value="Chessboard" {% if data.Items.Equipment_name == "Chessboard" %}selected{% endif %}>Chessboard</option>
+                    <option value="Table Tennis Racket" {% if data.Items.Equipment_name == "Table Tennis Racket" %}selected{% endif %}>Table Tennis Racket</option>
+                    <option value="Arnis" {% if data.Items.Equipment_name == "Arnis" %}selected{% endif %}>Arnis</option>
+                    <option value="Baseball Bat" {% if data.Items.Equipment_name == "Baseball Bat" %}selected{% endif %}>Baseball Bat</option>
+                 <!--   prettier-ignore-end -->
                   </select>
                 </div>
               </div>
             </div>
             <div class="columns">
               <div class="column">
-                <h1>Quantity:</h1>
+                <h1 class="sty-lbl-fz-small sty-hind-fm sty-lbl-inp">
+                  Quantity:
+                </h1>
               </div>
               <div class="column">
-                <input type="text" class="input" id="inp_qty" value="{{ data.Items.Qty }}" />
+                <input
+                  type="text"
+                  class="input sty-inp-drp-equipdetails-RE"
+                  id="inp_qty"
+                  value="{{ data.Items.Qty }}"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- prettier-ignore -->
+        {% endfor %}
+      </div>
+      {% else %}
+      <!-- //prettier-ignore -->
+      <div id="items_container">
+        <div class="columns is-vcentered">
+          <div class="column is-2">
+            <h1
+              class="sty-lbl-fz-small sty-hind-fm sty-lbl-items sty-hind-fm"
+              id="item_count"
+            >
+              Item 1
+            </h1>
+          </div>
+
+          <div class="column">
+            <div class="columns">
+              <div class="column is-6">
+                <h1 class="sty-lbl-fz-small sty-hind-fm sty-lbl-inp">
+                  Equipment Name:
+                </h1>
+              </div>
+              <div class="column">
+                <div class="select sty-hind-fm sty-inp-drp-equipdetails-RE">
+                  <select class="" id="inp_equipment_name">
+                    <!-- prettier-ignore -->
+                    <option value="Basketball">Basketball</option>
+                    <option value="Volleyball">Volleyball</option>
+                    <option value="Chessboard">Chessboard</option>
+                    <option value="Table Tennis Racket" >Table Tennis Racket</option>
+                    <option value="Arnis" >Arnis</option>
+                    <option value="Baseball Bat">Baseball Bat</option>
+                    <!-- //prettier-ignore -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-6">
+                <h1 class="sty-lbl-fz-small sty-hind-fm sty-lbl-inp">
+                  Quantity:
+                </h1>
+              </div>
+              <div class="column">
+                <input
+                  type="text"
+                  class="input sty-inp-drp-equipdetails-RE"
+                  id="inp_qty"
+                  value="{{ data.Items.Qty }}"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-      {% endfor %}
+      <!-- prettier-ignore -->
+      {% endif %}
+      <!-- //prettier-ignore -->
       <!-- THIS IS THE END-->
-      <div class="columns">
+      <div class="columns mt-6">
+        <div class="column is-1"></div>
         <div class="column">
-          <a class="button" href="{% url 'main:user_borrow' %}">Cancel</a>
+          <a
+            class="button sty-btn-fz sty-roboto-fm sty-btn-submit-RE"
+            href="{% url 'main:user_borrow' %}"
+            >Cancel</a
+          >
         </div>
         <div class="column">
-          <div class="button" id="btn_request">Request</div>
+          <div
+            class="button sty-btn-fz sty-roboto-fm sty-btn-submit-RE"
+            id="btn_request"
+          >
+            Request
+          </div>
         </div>
+        <div class="column is-1"></div>
       </div>
-      <h1 class="has-text-centered" id="err_msg">Error</h1>
+      <h1 class="has-text-centered sty-err-RE" id="err_msg"></h1>
     </div>
+
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
@@ -72,16 +229,23 @@
       //GIVEN
       //{% block scripts %}
       let items_container = document.getElementById("items_container");
-      let btn_add_items_equipment = document.getElementById("btn_add_items_equipment");
+      let btn_add_items_equipment = document.getElementById(
+        "btn_add_items_equipment"
+      );
       let btn_request = document.getElementById("btn_request");
-      let i = 2;
+      let i = 0;
       btn_add_items_equipment.addEventListener("click", () => {
         //console.log("this btn add item");
 
-        const newItem = items_container.querySelector(".columns").cloneNode(true);
+        const newItem = items_container
+          .querySelector(".columns")
+          .cloneNode(true);
+        let item_count = document.querySelectorAll("#item_count");
         /*const itemCount =
           items_container.querySelectorAll(".columns").length + 1; */
-        newItem.querySelector("h1").textContent = `Item ${i}`;
+        newItem.querySelector("h1").textContent = `Item ${
+          item_count.length + 1
+        }`;
         newItem.querySelector("#inp_qty").value = "";
         items_container.appendChild(newItem);
         i += 1;
@@ -129,12 +293,17 @@
 
         let arr_equipment_name = [];
         let arr_qty = [];
-        let get_all_equipment_name = document.querySelectorAll("#inp_equipment_name");
+        let get_all_equipment_name = document.querySelectorAll(
+          "#inp_equipment_name"
+        );
         let get_all_qty = document.querySelectorAll("#inp_qty");
 
         let dataList = [];
         for (let i = 0; i < get_all_qty.length; i++) {
-          if (get_all_equipment_name[i].value === "" || get_all_qty[i].value === "") {
+          if (
+            get_all_equipment_name[i].value === "" ||
+            get_all_qty[i].value === ""
+          ) {
             dataList = false;
             let err_msg = document.getElementById("err_msg");
             err_msg.textContent = "Please input all the form";
@@ -157,6 +326,18 @@
         //console.log(dataList);
         return dataList;
       }
+
+      let btn_del_items_request = document.getElementById(
+        "btn_del_items_request"
+      );
+      btn_del_items_request.addEventListener("click", () => {
+        let last_item_container = document.querySelectorAll("#each_items");
+        if (last_item_container.length > 1) {
+          let get_last_item =
+            last_item_container[last_item_container.length - 1];
+          get_last_item.remove();
+        }
+      });
 
       // {% endblock scripts %}
     </script>
