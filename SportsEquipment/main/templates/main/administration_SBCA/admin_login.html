@@ -9,36 +9,112 @@
     <title>Admin Login | SBCA Sports Equipment</title>
     {% endblock title %}
   </head>
+
+  <style>
+    /* {% block styles %} */
+    .sty-head-login {
+      font-weight: 800;
+      color: black;
+    }
+    .sty-login-bkg {
+      background-color: #f3e4d3;
+
+      border-radius: 16px;
+    }
+    .sty-subheader-login {
+      font-weight: 600;
+      color: black;
+    }
+    .sty-subheader-down-login {
+      font-weight: 500;
+      color: black;
+    }
+    .sty-labels-login {
+      font-weight: 300;
+      color: black;
+    }
+
+    .sty-inp-login {
+      background-color: #fefae0 !important;
+      border: solid 2px #283618 !important;
+      font-size: 20px !important;
+    }
+    .sty-err {
+      color: red;
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .sty-btn-login {
+      width: 170px;
+      background-color: #f25c54;
+      font-weight: 500;
+      color: #fefae0;
+    }
+    .sty-btn-login:hover {
+      cursor: pointer;
+    }
+    .sty-btn-div-login {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sty-note-login {
+      font-weight: 300;
+      text-align: justify;
+      color: black;
+    }
+    /* {% endblock styles %}*/
+  </style>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>School Equipment</h1>
-      <h1>San Beda College Alabang</h1>
-      <h1>(Admin Dashboard)</h1>
+    <div class="container has-text-centered sty-login-bkg px-6 pt-6">
+      <h1 class="sty-base-header-fz sty-base-montserrat-fm sty-head-login">
+        School Equipment
+      </h1>
+      <h1
+        class="sty-base-header-small-fz sty-base-hind-fm sty-subheader-login my-3"
+      >
+        San Beda College Alabang
+      </h1>
+      <h1
+        class="sty-base-header-smaller-fz sty-base-hind-fm sty-subheader-down-login mb-6"
+      >
+        (Admin Dashboard)
+      </h1>
 
-      <div class="columns">
+      <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Username:</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-labels-login">
+            Username:
+          </h1>
         </div>
         <div class="column">
-          <input type="text" class="input" />
+          <input type="text" class="input sty-inp-login" id="inp_username" />
         </div>
+        <div class="column is-2"></div>
       </div>
 
-      <div class="columns">
+      <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Password:</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-labels-login">
+            Password:
+          </h1>
         </div>
         <div class="column">
-          <input type="text" class="input" />
+          <input type="text" class="input sty-inp-login" id="inp_password" />
         </div>
+        <div class="column is-2"></div>
       </div>
-
-      <div class="button">Submit</div>
-
-      <h1>
+      <div id="msg_err" class="sty-err"></div>
+      <div class="sty-btn-div-login">
+        <h1 class="sty-base-small-fz sty-btn-login" id="btn_submit">Submit</h1>
+      </div>
+      <h1 class="sty-base-smaller-fz sty-base-hind-fm sty-note-login mt-6 mx-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quae
         cupiditate et molestiae dolorum dolore suscipit hic illo sunt unde?
         Natus quidem laboriosam assumenda corrupti labore. Neque nulla minus,
@@ -50,5 +126,63 @@
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
+
+    <script>
+      //{% block scripts %}
+      let msg_err = document.getElementById("msg_err");
+      let btn_submit = document.getElementById("btn_submit");
+      btn_submit.addEventListener("click", (event) => {
+        event.preventDefault();
+        let json_data = Validate();
+
+        if (!json_data) {
+          return;
+        }
+        console.log(json_data);
+        let response = fetch("{% url 'main:admin_login' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          mode: "same-origin",
+          body: JSON.stringify(json_data),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              return res.json().then((errData) => {
+                throw new Error(errData.err || "Server error occurred");
+              });
+            }
+          })
+          .then((msg) => {
+            console.log("has been approve");
+            console.log(msg);
+            window.location.href = `${msg.redirect_url}`;
+          })
+          .catch((err) => {
+            msg_err.textContent = `${err}`;
+          });
+      });
+
+      function Validate() {
+        let data = {};
+        let inp_username = document.getElementById("inp_username").value;
+        let inp_password = document.getElementById("inp_password").value;
+        if (inp_username === "" || inp_password === "") {
+          msg_err.textContent = "Please input all values";
+          return false;
+        }
+        data = {
+          username: inp_username,
+          password: inp_password,
+        };
+        return data;
+      }
+
+      //{% endblock scripts %}
+    </script>
   </body>
 </html>

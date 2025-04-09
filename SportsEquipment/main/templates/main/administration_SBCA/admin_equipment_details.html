@@ -9,40 +9,88 @@
     <title>Admin Equipment Details | SBCA Sports Equipment</title>
     {% endblock title %}
   </head>
+
+  <style>
+    /* {% block styles %}*/
+    .sty-bkg-container-equipdetail {
+      background-color: #fefae0;
+    }
+    .sty-header-equipdetail {
+      font-weight: 700;
+      color: black;
+    }
+    .sty-content-equipdetail {
+      color: black;
+      font-weight: 400;
+    }
+
+    .sty-btn-goback-equipdetail {
+      width: 150px !important;
+      background-color: #f6aa1c !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: black !important;
+    }
+    /* {% endblock styles %}*/
+  </style>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>Equipment Details</h1>
+    <div
+      class="container has-text-centered sty-bkg-container-equipdetail px-6 pt-6"
+    >
+      <h1
+        class="sty-base-header-littler-big-fz sty-base-montserrat-fm sty-header-equipdetail mb-6"
+      >
+        Equipment Details
+      </h1>
       <div class="columns">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Equipment</h1>
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-equipdetail"
+          >
+            Equipment
+          </h1>
         </div>
         <div class="column">
-          <h1>Borrowed Items</h1>
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-equipdetail"
+          >
+            Borrowed Items
+          </h1>
         </div>
-        <div class="column">
-          <h1>Available Items</h1>
-        </div>
-        <div class="column"><h1>Total Items</h1></div>
-        <div class="column"><h1>Functions</h1></div>
+        <div class="column is-2"></div>
       </div>
-      <div class="columns">
+      {% for data in get_data %}
+      <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>---Equipment ----</h1>
+          <h1
+            class="sty-base-small-fz sty-base-roboto-fm sty-content-equipdetail"
+          >
+            {{ data.Equipment_name }}
+          </h1>
         </div>
         <div class="column">
-          <h1>---Borrowed Items ----</h1>
-          <a href="#">See Details</a>
+          <h1
+            class="sty-base-small-fz sty-base-roboto-fm sty-content-equipdetail"
+          >
+            {{ data.total_qty }}
+          </h1>
+          <a href="/admin-equipment-details/get/{{ data.Equipment_name }}"
+            >See Details</a
+          >
         </div>
-        <div class="column">
-          <h1>----Available Items ----</h1>
-        </div>
-        <div class="column"><h1>---- Total Items ----</h1></div>
-        <div class="column"><h1>---- Functions ----</h1></div>
+        <div class="column is-2"></div>
       </div>
-      <div class="button">Go Back</div>
+      {% endfor %}
+      <a
+        class="button sty-btn-goback-equipdetail"
+        href="{% url 'main:admin_dashboard' %}"
+        >Go Back</a
+      >
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}

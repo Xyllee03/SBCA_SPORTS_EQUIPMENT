@@ -52,12 +52,31 @@
       .sty-roboto-fm {
         font-family: "Roboto", sans-serif;
       }
+      @media (max-width: 768px) {
+        .sty-header-big-fz {
+          font-size: 36px;
+        }
+        .sty-header-fz {
+          font-size: 32px;
+        }
+        .sty-subheader-fz {
+          font-size: 28px;
+        }
+        .sty-lbl-fz-small {
+          font-size: 22px;
+        }
+        .sty-lbl-fz-smaller {
+          font-size: 16px;
+        }
+        .sty-btn-fz {
+          font-size: 18px;
+        }
+      }
+      /*
+            {% block styles %}
 
-      /* 
-        {% block styles %}
-
-        {% endblock styles%}
-        */
+            {% endblock styles%}
+            */
     </style>
   </head>
   <body>
@@ -81,6 +100,20 @@
       src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"
     ></script>
     <script>
+      async function initializeCSRF() {
+        let response = await fetch("{% url 'main:set_csrf_token' %}", {
+          method: "GET",
+          credentials: "include", //  Ensures cookies are sent and received
+        });
+
+        if (response.ok) {
+          console.log("CSRF Token Initialized");
+        } else {
+          console.error("Failed to initialize CSRF");
+        }
+      }
+      initializeCSRF();
+
       function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {

@@ -10,45 +10,434 @@
     <title>Admin Dashboard | SBCA Sports Equipment</title>
     {% endblock title %}
   </head>
+  <style>
+    /* {% block styles %}*/
+    body {
+      background-color: #f25c54;
+    }
+    .sty-left-section-dashboard {
+      background-color: #fefae0;
+      height: 80vh;
+      overflow: auto;
+    }
+    .sty-header-left-header-dashboard {
+      color: black;
+      font-weight: 800;
+    }
+    .sty-inp-left-dashboard-div {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+    .sty-inp-dashboard {
+      background-color: #f25c54;
+      color: #000000;
+      width: 280px;
+      font-size: 22px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .sty-inp-dashboard::placeholder {
+      background-color: #f25c54;
+      color: #fefae0;
+    }
+    .sty-pending-list {
+      color: black;
+      font-weight: 600;
+    }
+    .sty-app-del-icon {
+      font-size: 30px !important;
+    }
+    .sty-app-icon {
+      background-color: #79f254 !important;
+    }
+    .sty-del-icon {
+      background-color: #fa1111 !important;
+    }
+
+    .sty-right-top-section-dashboard {
+      background-color: #fefae0;
+      height: 40vh;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-direction: column;
+    }
+    .sty-right-bottom-section-dashboard {
+      background-color: #fefae0;
+      height: 40vh;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-direction: column;
+      overflow: auto;
+    }
+
+    .sty-btn-item-details {
+      background-color: #f6aa1c !important;
+      color: #000000 !important;
+      font-weight: 600 !important;
+      font-size: 32px !important;
+      font-family: "Montserrat", sans-serif !important;
+      font-optical-sizing: auto !important;
+      font-style: normal !important;
+    }
+    .sty-header-recent-app-dashboard {
+      color: black;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    .sty-recent-app-list-dashboard {
+      color: black;
+      font-weight: 400;
+    }
+    .sty-err {
+      color: red;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    /* {% endblock styles %}*/
+  </style>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
     <div class="container">
       <div class="columns has-text-centered is-vcentered">
-        <div class="column">
-          <h1>Item Pending Request</h1>
-          <div>
-            <input type="text" class="input" />
+        <div class="column sty-left-section-dashboard">
+          <h1
+            class="sty-base-header-small-fz sty-base-hind-fm sty-header-left-header-dashboard"
+          >
+            Item Pending Request
+          </h1>
+          <div class="sty-inp-left-dashboard-div">
+            <input
+              type="text"
+              class="sty-inp-dashboard mb-6"
+              placeholder="Search item"
+              id="inp_filter_list"
+            />
           </div>
-          <div class="columns is-vcentered">
-            <div class="column">
-              <h1>///CODE</h1>
+          {% for request in user_request %}
+          <div class="columns is-vcentered" id="filter_inp_list">
+            <div class="column is-7">
+              <a
+                href="/admin-check-request/{{ request.code_request }}"
+                class=""
+              >
+                <h1
+                  class="sty-basesubheader-fz sty-base-montserrat-fm sty-pending-list"
+                >
+                  {{ request.code_request }}
+                </h1>
+              </a>
             </div>
             <div class="column">
-              <div class="button">Check</div>
+              <div class="has-text-centered">
+                <div
+                  class="button sty-app-del-icon sty-app-icon"
+                  data-request-id="{{ request.id }}"
+                  data-request-code="{{ request.code_request }}"
+                  onclick="accept_request(event)"
+                >
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+              </div>
             </div>
             <div class="column">
-              <div class="button">Check</div>
+              <div
+                class="button sty-app-del-icon sty-del-icon"
+                data-request-id="{{ request.id }}"
+                data-request-code="{{ request.code_request }}"
+                onclick="denied_request(event)"
+              >
+                <ion-icon name="trash-bin-outline"></ion-icon>
+              </div>
             </div>
           </div>
+          {% endfor %}
         </div>
         <div class="column">
-          <div>
-            <div class="button">Retrieve Item</div>
+          <div class="sty-right-top-section-dashboard">
+            <div
+              class="button sty-btn-item-details px-6"
+              id="btn_retrieve_item"
+            >
+              <h1 class="sty-basesubheader-fz sty-base-hind-fm">
+                Retrieve Item
+              </h1>
+            </div>
+
+            <div class="mt-6">
+              <a
+                class="button sty-btn-item-details px-6"
+                href="{% url 'main:admin_equipment_details' %}"
+                ><h1 class="sty-basesubheader-fz sty-base-hind-fm">
+                  Equipment Details
+                </h1></a
+              >
+            </div>
           </div>
-          <div>
-            <div class="button">Equipment</div>
-          </div>
-          <div>
-            <h1>Recent Approve Request</h1>
-            <h1>/// CODE</h1>
+          <div class="sty-right-bottom-section-dashboard mt-3">
+            <h1
+              class="sty-base-header-small-fz sty-base-hind-fm sty-header-recent-app-dashboard"
+            >
+              Recent Approve Request
+            </h1>
+            {% for approve_request in user_approve %}
+            <a
+              href="/admin-check-request-approve/{{ approve_request.code_request }}"
+            >
+              <h1
+                class="sty-basesubheader-fz sty-base-montserrat-fm sty-recent-app-list-dashboard"
+              >
+                <!-- prettier-ignore -->
+                {{ approve_request.student_no }} --- {{ approve_request.code_request }}
+                <!-- //prettier-ignore -->
+              </h1>
+            </a>
+            {% endfor %}
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- MODAL ACCEPT-REMOVE REQUEST -->
+
+    <div class="modal" id="mdl_acc_rem_main">
+      <div class="modal-background" onclick="mdl_acc_rem_close()"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p
+            class="modal-card-title sty-mdl-app-deni-header-dashboard has-text-centered"
+            id="mdl_acc_rem_title"
+          ></p>
+          <button
+            class="delete"
+            aria-label="close"
+            onclick="mdl_acc_rem_close()"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <h1
+            id="mdl_acc_rem_subtitle"
+            class="sty-base-smaller-fz has-text-centered sty-mdl-app-deni-subheader-dashboard"
+          ></h1>
+          <input type="text" id="inp_code" hidden />
+        </section>
+        <footer class="modal-card-foot">
+          <div class="sty-mdl-btn-dashboard-center">
+            <button class="button is-success" id="btn_acc_rem_submit">
+              Approve Request
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- MODAL RETURNED ITEM -->
+    <div class="modal" id="mdl_returned_main">
+      <div class="modal-background" onclick="mdl_returned_main_close()"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p
+            class="modal-card-title sty-mdl-app-deni-header-dashboard has-text-centered"
+          >
+            Enter the code
+          </p>
+          <button
+            class="delete"
+            aria-label="close"
+            onclick="mdl_returned_main_close()"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <input
+            type="text"
+            class="input sty-input-ent-code"
+            id="inp_code_mdl_returned"
+          />
+          <h1 id="err_msg_mdl_returned" class="has-text-centered sty-err"></h1>
+        </section>
+        <footer class="modal-card-foot"></footer>
       </div>
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
+
+    <script>
+      //{% block scripts %}
+
+      //given
+      let mdl_acc_rem_title = document.getElementById("mdl_acc_rem_title");
+      let mdl_acc_rem_subtitle = document.getElementById(
+        "mdl_acc_rem_subtitle"
+      );
+      let mdl_acc_rem_main = document.getElementById("mdl_acc_rem_main");
+      let btn_acc_rem_submit = document.getElementById("btn_acc_rem_submit");
+      let inp_code = document.getElementById("inp_code");
+
+      function accept_request(event) {
+        event.preventDefault();
+        event.stopPropagation(); // Stops the event from bubbling
+        let target = event.target.closest(".button");
+        let get_request_id = target.getAttribute("data-request-id");
+        let get_request_code = target.getAttribute("data-request-code");
+        //console.log(`${get_request_id},${get_request_code}`);
+        mdl_acc_rem_title.textContent = "Request Approve";
+        mdl_acc_rem_subtitle.textContent = `Do you want to approve the request code ${get_request_code}`;
+        mdl_acc_rem_main.classList.add("is-active");
+        inp_code.value = get_request_code;
+        btn_acc_rem_submit.onclick = function () {
+          event.preventDefault(); // Prevents default behavior
+          event.stopPropagation(); // Stops the event from bubbling
+          json_data = {
+            code: get_request_code,
+          };
+          //print(`This is for json data .${json_data}`);
+
+          console.log(json_data);
+          let response = fetch("{% url 'main:admin_approve_request' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            mode: "same-origin",
+            body: JSON.stringify(json_data),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((msg) => {
+              console.log(msg);
+              window.location.reload();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+      }
+
+      function denied_request(event) {
+        let target = event.target.closest(".button");
+        let get_request_id = target.getAttribute("data-request-id");
+        let get_request_code = target.getAttribute("data-request-code");
+        console.log(`${get_request_id},${get_request_code}`);
+
+        mdl_acc_rem_title.textContent = "Request Denied";
+        mdl_acc_rem_subtitle.textContent = `Do you want to denied request code ${get_request_code}`;
+        mdl_acc_rem_main.classList.add("is-active");
+        inp_code.value = get_request_code;
+
+        btn_acc_rem_submit.onclick = function () {
+          event.preventDefault(); // Prevents default behavior
+          event.stopPropagation(); // Stops the event from bubbling
+          json_data = {
+            code: get_request_code,
+          };
+          //print(`This is for json data .${json_data}`);
+
+          console.log(json_data);
+          let response = fetch("{% url 'main:admin_denied_request' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            mode: "same-origin",
+            body: JSON.stringify(json_data),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((msg) => {
+              console.log(msg);
+              window.location.reload();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+      }
+
+      function mdl_acc_rem_close() {
+        mdl_acc_rem_main.classList.remove("is-active");
+      }
+
+      // --- RETURNED ITEM MODAL
+      //given
+      let inp_code_mdl_returned = document.getElementById(
+        "inp_code_mdl_returned"
+      );
+      let err_msg_mdl_returned = document.getElementById(
+        "err_msg_mdl_returned"
+      );
+      let btn_retrieve_item = document.getElementById("btn_retrieve_item");
+      let mdl_returned_main = document.getElementById("mdl_returned_main");
+      btn_retrieve_item.addEventListener("click", () => {
+        mdl_returned_main.classList.add("is-active");
+      });
+      inp_code_mdl_returned.addEventListener("keypress", () => {
+        if (event.key == "Enter") {
+          let json_data1 = {
+            msg: "retrieving server",
+          };
+          let response = fetch(
+            `/admin-check-request-approve/${inp_code_mdl_returned.value}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"),
+              },
+              mode: "same-origin",
+              body: JSON.stringify(json_data1),
+            }
+          )
+            .then((response) => {
+              if (!response.ok) {
+                // If response status is not OK (400, 500, etc.), throw an error
+                return response.json().then((errData) => {
+                  throw errData;
+                });
+              }
+              return response.json();
+            }) // Otherwise, parse the JSON response
+            .then((msg) => {
+              console.log(msg);
+              window.location.href = `${msg.redirect_url}`;
+            })
+            .catch((err) => {
+              console.log(err);
+              err_msg_mdl_returned.textContent = `${err.msg}`;
+            });
+        }
+      });
+      function mdl_returned_main_close() {
+        mdl_returned_main.classList.remove("is-active");
+      }
+
+      // -------- INPUT SEARCHING --------
+      let inp_filter_list = document.getElementById("inp_filter_list");
+      inp_filter_list.addEventListener("input", function () {
+        let searchValue = this.value.toUpperCase();
+        let filterItems = document.querySelectorAll("#filter_inp_list");
+        filterItems.forEach((item) => {
+          let code = item.querySelector("h1").textContent.toUpperCase();
+          if (code.includes(searchValue)) {
+            item.style.display = "";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+      //{% endblock scripts %}
+    </script>
   </body>
 </html>

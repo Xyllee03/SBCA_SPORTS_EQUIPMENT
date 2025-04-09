@@ -36,6 +36,13 @@
         margin-left: 100px;
         margin-right: 100px;
       }
+
+      @media (max-width: 768px) {
+        .sty-lbl-dec-postRD {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
       /* {% endblock styles %}*/
     </style>
   </head>
@@ -58,25 +65,29 @@
           >
             REQUEST DETAILS
           </h1>
-          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
-            <div class="column is-2"></div>
+          <div
+            class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD is-vcentered is-mobile is-desktop"
+          >
+            <div class="column is-0-mobile is-2-desktop"></div>
             <div class="column">
               <h1>Student No.</h1>
             </div>
             <div class="column">
               <h1 class="sty-lbl-postRD">{{ Profile.student_no }}</h1>
             </div>
-            <div class="column is-2"></div>
+            <div class="column is-0-mobile is-2-desktop"></div>
           </div>
-          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
-            <div class="column is-2"></div>
+          <div
+            class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD is-mobile is-desktop is-vcentered"
+          >
+            <div class="column is-0-mobile is-2-desktop"></div>
             <div class="column">
               <h1>Student Name.</h1>
             </div>
             <div class="column">
               <h1>{{ Profile.last_name }} {{ Profile.first_name }}</h1>
             </div>
-            <div class="column is-2"></div>
+            <div class="column is-0-mobile is-2-desktop"></div>
           </div>
         </div>
         <div>
@@ -85,26 +96,30 @@
           >
             Borrowed Items
           </h1>
-          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
-            <div class="column is-2"></div>
+          <div
+            class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD is-vcentered is-mobile is-desktop"
+          >
+            <div class="column is-0-mobile is-2-desktop"></div>
             <div class="column">
               <h1>Equipment Name</h1>
             </div>
             <div class="column">
               <h1>Qty</h1>
             </div>
-            <div class="column is-2"></div>
+            <div class="column is-0-mobile is-2-desktop"></div>
           </div>
           {% for equipment in Equipments%}
-          <div class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD">
-            <div class="column is-2"></div>
+          <div
+            class="columns sty-lbl-fz-small sty-hind-fm sty-lbl-postRD is-mobile is-desktop is-vcentered"
+          >
+            <div class="column is-0-mobile is-2-desktop"></div>
             <div class="column">
               <h1>{{ equipment.equipment_name }}</h1>
             </div>
             <div class="column">
               <h1>{{ equipment.quantity }}</h1>
             </div>
-            <div class="column is-2"></div>
+            <div class="column is-0-mobile is-2-desktop"></div>
           </div>
           {% endfor %}
           <h1 class="sty-lbl-fz-smaller sty-hind-fm sty-lbl-dec-postRD mt-6">

@@ -1,9 +1,14 @@
 from django.shortcuts import render
 import json
 from django.http import JsonResponse
-from .models import ItemRequest, StudentBorrow
+from .models import ItemRequest, StudentBorrow, UserSites, REQUESTAPPROVE 
 import random
 import string
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -166,26 +171,156 @@ def admin_base(request):
 
     return render(request,"main/administration_SBCA/admin_base.html", context)
 
-def admin_login(request):
+
+
+def admin_login(request): 
+    if(request.method =="POST"):
+        data = json.loads(request.body) 
+        print(data) 
+        try:
+            u_check =  User.objects.get(username =data['username'])
+            #print(check_password(data['password'], u_check.password))
+            if(check_password(data['password'], u_check.password)):
+                user = authenticate(request, username = data['username'], password = data['password'])
+                #print("not been authenticate")
+                login(request, user)
+                print("been authenticate")
+                return JsonResponse({"msg": "User has been retrieve", "redirect_url":"/admin-dashboard/"}, status=200)
+            
+            
+            else:
+                return JsonResponse({'err':"Wrong username and password"}, status =500)
+                
+        except:
+            return JsonResponse({'err':"Wrong username and password"}, status =500)
+       
     context ={}
 
     return render(request,"main/administration_SBCA/admin_login.html", context)
 
 
-
+@login_required
 def admin_dashboard(request):
-    context ={}
+
+    
+    get_user_request = StudentBorrow.objects.filter(request_status = REQUESTAPPROVE.PENDING).order_by("id")
+    get_user_approve_request = StudentBorrow.objects.filter(request_status = REQUESTAPPROVE.APPROVE).order_by("id")
+    #print(get_user_request)    
+    context ={
+        "user_request":get_user_request,
+        "user_approve": get_user_approve_request
+    }
 
     return render(request,"main/administration_SBCA/admin_dashboard.html", context) 
 
+@login_required
+def admin_approve_request(request):
+    
+    if request.method =="POST":
+       
+        data = json.loads(request.body)
+        #print(data)
+        #print("this is for request")
+        get_data = StudentBorrow.objects.filter(code_request= data['code']).first()
+        
+        get_data.request_status = REQUESTAPPROVE.APPROVE
+        get_data.save()
+     
 
-def admin_chkdetails(request):
-    context ={}
+        return JsonResponse({"msg": "User has been retrieve"}, status=200)
+
+@login_required
+def admin_denied_request(request):
+    
+    if request.method =="POST":
+       
+        data = json.loads(request.body)
+        #print(data)
+        #print("this is for request")
+        get_data = StudentBorrow.objects.filter(code_request= data['code']).first()
+        
+        get_data.request_status = REQUESTAPPROVE.DENIED
+        get_data.save()
+     
+
+        return JsonResponse({"msg": "User has been retrieve"}, status=200)
+@login_required
+def admin_returned_request(request):
+    if(request.method =="POST"):
+  
+        data = json.loads(request.body)
+
+        get_user = StudentBorrow.objects.get(code_request =data['code'])
+        get_user.delete()
+
+        
+        #print(data)
+        return JsonResponse({"msg": "User has been retrieve","redirect_url":'/admin-dashboard/'}, status=200)
+
+
+@login_required
+def admin_chkdetails(request, code):
+    get_user = StudentBorrow.objects.get(code_request = code)
+    get_items = ItemRequest.objects.filter(id_student_borrow = get_user)
+    context ={
+
+        "get_user": get_user,
+        'get_item': get_items
+    }
 
     return render(request,"main/administration_SBCA/admin_chk_req.html", context) 
 
+@login_required
+def admin_chkdetails_app(request, code):
+   
+    #For input
+    if(request.method =="POST"):
+        try:
+            get_user = StudentBorrow.objects.get(code_request = code)
+            return JsonResponse({"msg": "User has been retrieve","redirect_url":f'/admin-check-request-approve/{code}'}, status=200)
+        except:
+            return JsonResponse({"msg": "Code doesnt exist"}, status=500)
 
+    get_user = StudentBorrow.objects.get(code_request = code)
+    get_items = ItemRequest.objects.filter(id_student_borrow = get_user)
+    context ={
+        
+        "get_user": get_user,
+        'get_item': get_items
+    }
+    return render(request,"main/administration_SBCA/admin_chk_req_app.html", context) 
+    
+
+@login_required
 def admin_equipment_details(request):
-    context ={}
+    items=['Basketball','Volleyball','Chessboard','Table Tennis Racket','Arnis','Baseball Bat']
+    context_arr =[]
+    total_items =0
+    for item in items:
+        get_objs = ItemRequest.objects.filter(equipment_name = item,id_student_borrow__request_status = REQUESTAPPROVE.APPROVE)
+        for obj in get_objs:
+            total_items += obj.quantity
+        context_arr.append({"Equipment_name":item, "total_qty":total_items})
+        total_items=0
+        #print(context_arr)
+    #print(context_arr)   
+    #print(context)
+    context ={
+        "get_data": context_arr
+    }
+    return render(request,"main/administration_SBCA/admin_equipment_details.html", context)
 
-    return render(request,"main/administration_SBCA/admin_equipment_details.html", context) 
+
+@login_required
+def admin_equipment_details_invdiv(request,get_equipment_name):
+    get_specific_items = ItemRequest.objects.filter(equipment_name= get_equipment_name,id_student_borrow__request_status = REQUESTAPPROVE.APPROVE)
+    context ={
+        "items":get_specific_items,
+        "equipment_name": get_equipment_name
+    } 
+    return render(request,"main/administration_SBCA/admin_equipment_details_indiv.html", context)
+
+
+@ensure_csrf_cookie
+def set_csrf_token(request):
+    return JsonResponse({"message": "CSRF token set"})

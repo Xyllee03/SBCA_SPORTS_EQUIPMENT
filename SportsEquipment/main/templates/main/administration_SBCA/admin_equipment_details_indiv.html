@@ -8,25 +8,89 @@
     {% block title %}
     <title>Individual Items Details | SBCA Sports Equipment</title>
     {% endblock title %}
+
+    <style>
+      /*{% block styles %}*/
+      .sty-bkg-container-indiv {
+        background-color: #fefae0;
+        border-radius: 16px;
+      }
+
+      .sty-header-indiv {
+        color: black;
+        font-weight: 800;
+      }
+      .sty-content-indiv {
+        color: black;
+        font-weight: 400;
+      }
+      .sty-btn-back-indiv {
+        width: 150px !important;
+        background-color: #f6aa1c !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        color: black !important;
+      }
+      /*{% endblock styles %}*/
+    </style>
   </head>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>--- Individual Items ---</h1>
+    <div class="container has-text-centered sty-bkg-container-indiv px-6 pt-6">
+      <h1
+        class="sty-base-header-littler-big-fz sty-base-montserrat-fm mb-6 sty-header-indiv"
+      >
+        {{ equipment_name }}
+      </h1>
 
       <div class="columns">
         <div class="column">
-          <h1>Student No.</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-indiv">
+            Student No.
+          </h1>
         </div>
         <div class="column">
-          <h1>Name</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-indiv">
+            Name
+          </h1>
         </div>
         <div class="column">
-          <h1># Of Borrowed Items</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-indiv">
+            # Of Borrowed Items
+          </h1>
         </div>
       </div>
+
+      {% if items %} {% for item in items %}
+      <div class="columns">
+        <div class="column">
+          <h1 class="sty-base-small-fz sty-base-roboto-fm sty-content-indiv">
+            {{ item.id_student_borrow.student_no }}
+          </h1>
+        </div>
+        <div class="column">
+          <!-- prettier-ignore -->
+          <h1 class="sty-base-small-fz sty-base-roboto-fm sty-content-indiv">{{ item.id_student_borrow.last_name }} {{ item.id_student_borrow.last_name }}</h1>
+          <!--// prettier-ignore -->
+        </div>
+        <div class="column">
+          <h1 class="sty-base-small-fz sty-base-roboto-fm sty-content-indiv">
+            {{ item.quantity }} -
+          </h1>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <h1 class="sty-base-small-fz sty-base-roboto-fm sty-content-indiv">
+        --- No items has been borrowed ---
+      </h1>
+      {% endif %}
+      <a
+        class="button sty-btn-back-indiv"
+        href="{% url 'main:admin_equipment_details' %}"
+        >Go Back</a
+      >
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}

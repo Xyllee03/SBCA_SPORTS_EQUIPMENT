@@ -7,10 +7,75 @@
 
     <title>Admin Base</title>
     {% endblock title %}
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       .inherit_width {
         width: 100%;
+      }
+      .sty-base-header-fz {
+        font-size: 64px;
+      }
+      .sty-base-header-little-big-fz {
+        font-size: 55px;
+      }
+      .sty-base-header-littler-big-fz {
+        font-size: 50px;
+      }
+      .sty-base-header-small-fz {
+        font-size: 40px;
+      }
+      .sty-base-header-smaller-fz {
+        font-size: 36px;
+      }
+      .sty-basesubheader-fz {
+        font-size: 32px;
+      }
+      .sty-base-small-fz {
+        font-size: 24px;
+      }
+      .sty-base-smaller-fz {
+        font-size: 20px;
+      }
+      .sty-base-montserrat-fm {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+      .sty-base-roboto-fm {
+        font-family: "Roboto", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        font-variation-settings: "wdth" 100;
+      }
+      .sty-base-hind-fm {
+        font-family: "Hind Madurai", sans-serif;
+
+        font-style: normal;
+      }
+      .sty-mdl-app-deni-header-dashboard {
+        color: black;
+        font-weight: 600;
+      }
+      .sty-mdl-app-deni-subheader-dashboard {
+        color: black !important;
+        font-weight: 400 !important;
+      }
+      .sty-mdl-btn-dashboard-center {
+        width: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .sty-input-ent-code {
+        background-color: #fefae0 !important;
+        border: solid 2px #283618 !important;
+        font-size: 20px !important;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
       }
       /* 
         {% block styles %}
@@ -37,5 +102,47 @@
         </div>
       </div>
     </section>
+
+    <script>
+      async function initializeCSRF() {
+        let response = await fetch("{% url 'main:set_csrf_token' %}", {
+          method: "GET",
+          credentials: "include", //  Ensures cookies are sent and received
+        });
+
+        if (response.ok) {
+          console.log("CSRF Token Initialized");
+        } else {
+          console.error("Failed to initialize CSRF");
+        }
+      }
+      initializeCSRF();
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      //{% block scripts %}
+      //{% endblock scripts %}
+    </script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>

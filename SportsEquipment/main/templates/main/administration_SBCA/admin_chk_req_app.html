@@ -1,0 +1,211 @@
+{% extends './admin_base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>Verification Details | SBCA Sports Equipment</title>
+    {% endblock title %}
+  </head>
+
+  <style>
+    /* {% block styles %}*/
+    .sty-bkg-container-reqapp {
+      background-color: #f3e4d3;
+      border-radius: 16px;
+    }
+    .sty-main-head-reqapp {
+      color: black;
+      font-weight: 900;
+    }
+    .sty-main-subhead-reqapp {
+      color: black;
+      font-weight: 600;
+    }
+    .sty-content-and-labels-reqapp {
+      color: black;
+      font-weight: 400;
+    }
+    .sty-content-subheader-reqapp {
+      color: black;
+      font-weight: 700;
+    }
+    .sty-btn-submit-reqapp {
+      width: 150px !important;
+      background-color: #79f254 !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: black !important;
+    }
+    .sty-btn-cancel-reqapp {
+      width: 150px !important;
+      background-color: #f6aa1c !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: black !important;
+    }
+    /* {% endblock styles %}*/
+  </style>
+  <body>
+    <!-- prettier-ignore -->
+    {% block content %}
+    <!-- //prettier-ignore -->
+
+    <div class="has-text-centered sty-bkg-container-reqapp p-6">
+      <h1
+        class="sty-base-header-little-big-fz sty-base-montserrat-fm sty-main-head-reqapp"
+      >
+        Request Code #: {{ get_user.code_request }}
+      </h1>
+      <h1
+        class="sty-base-header-littler-big-fz sty-base-montserrat-fm sty-main-subhead-reqapp"
+      >
+        RETURNED REQUEST
+      </h1>
+      <h1
+        class="sty-base-header-littler-big-fz sty-base-montserrat-fm sty-main-subhead-reqapp"
+      >
+        DETAILS
+      </h1>
+      <div class="columns">
+        <div class="column is-2"></div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            Student No:
+          </h1>
+        </div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            {{ get_user.student_no }}
+          </h1>
+        </div>
+        <div class="column is-2"></div>
+      </div>
+      <div class="columns">
+        <div class="column is-2"></div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            Student Name:
+          </h1>
+        </div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            {{ get_user.last_name }} {{ get_user.first_name }}
+          </h1>
+        </div>
+        <div class="column is-2"></div>
+      </div>
+
+      <h1
+        class="sty-basesubheader-fz sty-base-hind-fm sty-content-subheader-reqapp"
+      >
+        Borrowed Items
+      </h1>
+      <div class="columns">
+        <div class="column is-2"></div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            Equipment
+          </h1>
+        </div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            Qty
+          </h1>
+        </div>
+        <div class="column is-2"></div>
+      </div>
+      {% for item in get_item %}
+      <div class="columns">
+        <div class="column is-2"></div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            {{ item.equipment_name }}
+          </h1>
+        </div>
+        <div class="column">
+          <h1
+            class="sty-basesubheader-fz sty-base-hind-fm sty-content-and-labels-reqapp"
+          >
+            {{ item.quantity }}
+          </h1>
+        </div>
+        <div class="column is-2"></div>
+      </div>
+      {% endfor %}
+      <div class="columns">
+        <div class="column is-2"></div>
+        <div class="column">
+          <a
+            class="button sty-btn-cancel-reqapp"
+            href="{% url 'main:admin_dashboard' %}"
+            >Cancel</a
+          >
+        </div>
+        <div class="column">
+          <!-- HIDDEN INP -->
+          <input
+            type="text"
+            value="{{ get_user.code_request }}"
+            id="inp_code"
+            hidden
+          />
+          <div class="button sty-btn-submit-reqapp" id="btn_save">Save</div>
+        </div>
+        <div class="column is-2"></div>
+      </div>
+    </div>
+    <!-- prettier-ignore -->
+    {% endblock content %}
+    <!-- //prettier-ignore -->
+
+    <script>
+      //{% block scripts %}
+      let btn_save = document.getElementById("btn_save");
+
+      btn_save.addEventListener("click", () => {
+        let inp_code = document.getElementById("inp_code").value;
+        let json_data = {
+          code: inp_code,
+        };
+
+        let response = fetch("{% url 'main:admin_returned_request' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          mode: "same-origin",
+          body: JSON.stringify(json_data),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((msg) => {
+            console.log(msg);
+            window.location.href = `${msg.redirect_url}`;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+      //{% endblock scripts %}
+    </script>
+  </body>
+</html>

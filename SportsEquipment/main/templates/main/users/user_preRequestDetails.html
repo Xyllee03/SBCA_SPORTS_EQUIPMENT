@@ -43,6 +43,13 @@
       width: 220px;
       font-weight: 600;
     }
+
+    @media (max-width: 768px) {
+      .sty-lbl-desc-preRD {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
     /* {% endblock styles %} */
   </style>
   <body>
@@ -59,19 +66,23 @@
         </h1>
         <h1 class="sty-header-fz sty-header-preRD my-5">Request Details</h1>
 
-        <div class="columns sty-lbl-fz-small sty-hind-fm">
-          <div class="column is-2"></div>
+        <div
+          class="columns sty-lbl-fz-small sty-hind-fm is-mobile is-desktop is-vcentered"
+        >
+          <div class="column is-0-mobile is-2-desktop"></div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD">Student No:</h1>
           </div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD">{{ Profile.student_no }}</h1>
           </div>
-          <div class="column is-2"></div>
+          <div class="column is-0-mobile is-2-desktop"></div>
         </div>
 
-        <div class="columns sty-lbl-fz-small sty-hind-fm">
-          <div class="column is-2"></div>
+        <div
+          class="columns sty-lbl-fz-small sty-hind-fm is-mobile is-desktop is-vcentered"
+        >
+          <div class="column is-0-mobile is-2-desktop"></div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD">Student Name:</h1>
           </div>
@@ -80,7 +91,7 @@
               {{ Profile.last_name }} {{ Profile.first_name }}
             </h1>
           </div>
-          <div class="column is-2"></div>
+          <div class="column is-0-mobile is-2-desktop"></div>
         </div>
 
         <h1
@@ -88,21 +99,25 @@
         >
           Borrowed Items
         </h1>
-        <div class="columns sty-lbl-fz-small sty-hind-fm">
-          <div class="column is-2"></div>
+        <div
+          class="columns sty-lbl-fz-small sty-hind-fm is-mobile is-desktop is-vcentered"
+        >
+          <div class="column is-0-mobile is-2-desktop"></div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD">Equipment</h1>
           </div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD">Qty</h1>
           </div>
-          <div class="column is-2"></div>
+          <div class="column is-0-mobile is-2-desktop"></div>
         </div>
         <!-- prettier-ignore -->
         {% for equip_data in Equipment_Details %}
         <!-- //prettier-ignore -->
-        <div class="columns sty-lbl-fz-small sty-hind-fm">
-          <div class="column is-2"></div>
+        <div
+          class="columns sty-lbl-fz-small sty-hind-fm is-mobile is-desktop is-vcentered"
+        >
+          <div class="column is-0-mobile is-2-desktop"></div>
           <div class="column">
             <h1 class="sty-lbl-subheader-preRD" id="inp_equipment_names">
               {{ equip_data.Items.Equipment_name }}
@@ -113,7 +128,7 @@
               {{ equip_data.Items.Qty }}
             </h1>
           </div>
-          <div class="column is-2"></div>
+          <div class="column is-0-mobile is-2-desktop"></div>
         </div>
         {% endfor %}
         <div class="columns mt-5">

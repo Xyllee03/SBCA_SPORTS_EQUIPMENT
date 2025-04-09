@@ -7,46 +7,126 @@
     {% block title %}
     <title>Admin Request Details | SBCA Sports Equipment</title>
     {% endblock title %}
+
+    <style>
+      /* {% block styles %}*/
+      .sty_bkg_chkreq {
+        background-color: #fefae0;
+        border-radius: 16px;
+      }
+      .sty-header-chkreq {
+        color: black;
+        font-weight: 800;
+      }
+      .sty-subheader-chkreq {
+        color: black;
+        font-weight: 600;
+      }
+      .sty-content-chkreq {
+        color: black;
+        font-weight: 400;
+      }
+      .sty-btn-back-chkreq {
+        width: 150px !important;
+        background-color: #f6aa1c !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+        color: black !important;
+      }
+      /* {% endblock styles %}*/
+    </style>
   </head>
   <body>
     <!-- prettier-ignore -->
     {% block content %}
     <!-- //prettier-ignore -->
-    <div class="container has-text-centered">
-      <h1>Request Code#:</h1>
-      <h1>Request Details</h1>
+    <div class="container has-text-centered sty_bkg_chkreq px-6 pt-6">
+      <h1
+        class="sty-base-header-little-big-fz sty-base-montserrat-fm sty-header-chkreq mb-4"
+      >
+        Request Code#: {{ get_user.code_request }}
+      </h1>
+      <h1
+        class="sty-base-header-littler-big-fz sty-base-montserrat-fm sty-subheader-chkreq mb-5"
+      >
+        Request Details
+      </h1>
       <div class="columns">
-        <div class="column"><h1>Student No:</h1></div>
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>-- Student No --</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            Student No:
+          </h1>
         </div>
+        <div class="column">
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            {{ get_user.student_no }}
+          </h1>
+        </div>
+        <div class="column is-2"></div>
       </div>
       <div class="columns">
-        <div class="column"><h1>Student Name:</h1></div>
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>-- Student Name --</h1>
+          <h class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq"
+            >Student Name:</h
+          >
         </div>
+        <div class="column">
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            {{ get_user.last_name }} {{ get_user.first_name }}
+          </h1>
+        </div>
+        <div class="column is-2"></div>
       </div>
-      <h1>Borrowed Items</h1>
+      <h1
+        class="sty-basesubheader-fz sty-base-hind-fm sty-subheader-chkreq mt-6"
+      >
+        Borrowed Items
+      </h1>
+
       <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>Equipment</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            Equipment
+          </h1>
         </div>
         <div class="column">
-          <h1>Qty</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            Qty
+          </h1>
         </div>
+        <div class="column is-2"></div>
       </div>
 
       <!-- EQUIPMENT AND QTY -->
+      {% for item in get_item %}
       <div class="columns is-vcentered">
+        <div class="column is-2"></div>
         <div class="column">
-          <h1>--Equipment--</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            {{ item.equipment_name }}
+          </h1>
         </div>
         <div class="column">
-          <h1>--Qty--</h1>
+          <h1 class="sty-basesubheader-fz sty-base-hind-fm sty-content-chkreq">
+            {{ item.quantity }}
+          </h1>
         </div>
+        <div class="column is-2"></div>
+      </div>
+      {% endfor %}
+      <div class="has-text-centered">
+        <a
+          href="{% url 'main:admin_dashboard' %}"
+          class="sty-btn-back-chkreq button"
+        >
+          Go Back</a
+        >
       </div>
     </div>
+
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
