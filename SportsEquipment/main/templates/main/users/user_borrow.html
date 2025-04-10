@@ -40,7 +40,7 @@
         color: blue;
       }
       .sty-btn-request-ub {
-        background-color: #f25c54;
+        background-color: #72b01d !important;
         color: #fefae0;
         width: 215px;
         border: solid black 3px;
@@ -49,6 +49,12 @@
         color: red;
         font-size: 20px;
         font-weight: 500;
+      }
+      .sty-btn-request-ub2 {
+        background-color: #5479f2;
+        color: #fefae0;
+        width: 215px;
+        border: solid black 3px;
       }
 
       /* {% endblock styles %}*/
@@ -68,9 +74,7 @@
       <div class="columns is-vcentered">
         <div class="column is-2"></div>
         <div class="column">
-          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
-            Student No:
-          </h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">Student No:</h1>
         </div>
         <div class="column">
           <input
@@ -85,9 +89,7 @@
       <div class="columns is-vcentered">
         <div class="column is-2"></div>
         <div class="column">
-          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
-            First Name:
-          </h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">First Name:</h1>
         </div>
         <div class="column">
           <input
@@ -102,9 +104,7 @@
       <div class="columns is-vcentered">
         <div class="column is-2"></div>
         <div class="column">
-          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">
-            Last Name:
-          </h1>
+          <h1 class="sty-lbl-fz-small sty-hind-fm sty-label-inp-ub">Last Name:</h1>
         </div>
         <div class="column">
           <input
@@ -116,22 +116,21 @@
         </div>
         <div class="column is-2"></div>
       </div>
-      <div
-        class="sty-lbl-fz-small sty-hind-fm sty-lbl-req-ub mb-6"
-        id="red_preload_data"
-      >
-        Request Multiple Items
-      </div>
-
-      <div>
-        <div
-          class="button sty-btn-fz sty-hind-fm sty-btn-request-ub"
-          id="btn_submit"
-        >
-          Request
+      <div class="columns is-vcentered">
+        <column class="column is-4"></column>
+        <div class="column">
+          <div class="button sty-btn-fz sty-hind-fm sty-btn-request-ub2" id="red_preload_data">
+            Order Items
+          </div>
         </div>
-        <div id="err_msg" class="sty-err-msg"></div>
+        <div class="column">
+          <div class="button sty-btn-fz sty-hind-fm sty-btn-request-ub" id="btn_submit">
+            Request
+          </div>
+        </div>
+        <column class="column is-4"></column>
       </div>
+      <div id="err_msg" class="sty-err-msg"></div>
     </div>
     <!-- prettier-ignore -->
     {% endblock content %}
@@ -220,8 +219,7 @@
           return false;
         }
         if (!Number.isInteger(parseInt(inp_student_no))) {
-          err_msg.textContent =
-            "Please Check the student no. make sure its number";
+          err_msg.textContent = "Please Check the student no. make sure its number";
           return false;
         }
         data = {
