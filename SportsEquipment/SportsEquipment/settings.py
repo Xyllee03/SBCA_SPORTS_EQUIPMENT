@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -93,7 +93,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-"""
+
 
 DATABASES = {
     'default': {
@@ -105,7 +105,18 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+"""
+""""""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config("DB_NAME"),
+        'USER': config("DB_USER"),
+        'PASSWORD': config("DB_PASSWORD"),
+        'HOST': config("DB_HOST"),  # e.g., 'srv123.main-hosting.eu' or an IP address
+        'PORT': '3306',
+            }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -161,5 +172,5 @@ AUTHENTICATION_BACKENDS = [
 #AUTH_USER_MODEL =   'main.models.UserSiteManager',
 
 
-DEBUG = False
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = config("DEBUG")
+ALLOWED_HOSTS =ALLOWED_HOSTS
