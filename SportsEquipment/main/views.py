@@ -149,16 +149,18 @@ def user_preRequestDetails(request):
 def user_postRequestDetails(request, get_request_code):
     #print("This is for request")
     #print(request_code)
-    get_profile =""
-    equipments_obj=""
+   
+    get_profile = StudentBorrow.objects.filter(code_request =get_request_code).first()
+    if get_profile:
+        equipments_obj = ItemRequest.objects.filter(id_student_borrow = get_profile)
     try:
+      
         del request.session['request_code']
         del request.session['borrower_profile']
         del request.session['users_equipment_detail']
-        get_profile = StudentBorrow.objects.get(code_request =get_request_code)
-        equipments_obj = ItemRequest.objects.filter(id_student_borrow = get_profile)
+       
     finally:
-   
+        
        
   
 
