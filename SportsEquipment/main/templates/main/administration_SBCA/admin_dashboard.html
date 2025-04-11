@@ -293,6 +293,7 @@
         mdl_acc_rem_subtitle.textContent = `Do you want to approve the request code ${get_request_code}`;
         mdl_acc_rem_main.classList.add("is-active");
         inp_code.value = get_request_code;
+        btn_acc_rem_submit.textContent = "Approve Request";
         btn_acc_rem_submit.onclick = function () {
           event.preventDefault(); // Prevents default behavior
           event.stopPropagation(); // Stops the event from bubbling
@@ -334,7 +335,7 @@
         mdl_acc_rem_subtitle.textContent = `Do you want to denied request code ${get_request_code}`;
         mdl_acc_rem_main.classList.add("is-active");
         inp_code.value = get_request_code;
-
+        btn_acc_rem_submit.textContent = "Deny Request";
         btn_acc_rem_submit.onclick = function () {
           event.preventDefault(); // Prevents default behavior
           event.stopPropagation(); // Stops the event from bubbling

@@ -53,6 +53,7 @@
     <!-- //prettier-ignore -->
     <div class="container has-text-centered sty-container-bkg">
       <div class="mx-6 pt-6">
+        {% if Profile %}
         <h1 class="sty-header-big-fz sty-monstserrat-fm sty-header-postRD">
           PLEASE TAKE A SCREENSHOT
         </h1>
@@ -129,6 +130,16 @@
             by the staff the purpose of the request
           </h1>
         </div>
+
+        {% else %}
+
+        <h1 class="sty-header-big-fz sty-monstserrat-fm sty-header-postRD">
+          Your request probably denied or remove by the admin
+        </h1>
+        <h1 class="sty-header-big-fz sty-monstserrat-fm sty-header-postRD">
+          SCAN again the QR to make request again
+        </h1>
+        {% endif %}
       </div>
     </div>
     <!-- prettier-ignore -->
