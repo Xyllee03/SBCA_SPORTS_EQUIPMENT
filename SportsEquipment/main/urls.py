@@ -3,7 +3,7 @@ from . import views
 
 app_name = "main"
 urlpatterns = [
-    path("", views.index, name ="index"),
+  #path("", views.index, name ="index"),
       path("user-predata/", views.userpredata, name ="userpredata"),
     path("users-base/", views.user_base, name ="user_base"),
     path("users/borrow/", views.user_borrow, name ="user_borrow"),
@@ -26,4 +26,7 @@ urlpatterns = [
 
             #INITIALIZED
         path('Initialized/cookies/', views.set_csrf_token,  name="set_csrf_token"),
+
+
+        
 ]

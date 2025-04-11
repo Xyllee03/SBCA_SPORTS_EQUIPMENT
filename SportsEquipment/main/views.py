@@ -327,3 +327,7 @@ def admin_equipment_details_invdiv(request,get_equipment_name):
 @ensure_csrf_cookie
 def set_csrf_token(request):
     return JsonResponse({"message": "CSRF token set"})
+
+
+def custom_404_view(request, exception):
+    return render(request, 'main/users/404.html', status=404)
