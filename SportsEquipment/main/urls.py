@@ -12,6 +12,7 @@ urlpatterns = [
        path("users/postRequestDetails/<str:get_request_code>", views.user_postRequestDetails, name="user_postRequestDetails"),
     path("admin-base/", views.admin_base, name ="admin_base"),
     path("admin-login/", views.admin_login, name ="admin_login"),
+        path("admin-logout/", views.admin_logout, name ="admin_logout"),
     #admin-dashboard
     path("admin-dashboard/approve", views.admin_approve_request, name ="admin_approve_request"),
      path("admin-dashboard/denide", views.admin_denied_request, name ="admin_denied_request"),

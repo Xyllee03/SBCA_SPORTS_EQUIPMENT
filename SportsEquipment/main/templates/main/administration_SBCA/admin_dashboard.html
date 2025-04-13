@@ -98,7 +98,21 @@
       font-weight: 500;
       font-size: 16px;
     }
+    .sty_logoutbtn-dashboard {
+      margin-left: auto;
+      margin-right: 30px;
+      color: black;
+      font-size: 40px;
+      width: 80px;
+      border: solid black 1px;
 
+      background-color: #f25c54;
+      border-radius: 16px;
+    }
+    .sty_logoutbtn-dashboard:hover {
+      color: rgb(52, 73, 237);
+      cursor: pointer;
+    }
     /* {% endblock styles %}*/
   </style>
   <body>
@@ -162,6 +176,11 @@
         </div>
         <div class="column">
           <div class="sty-right-top-section-dashboard">
+            <div class="sty_logoutbtn-dashboard" id="btn_logout">
+              <div>
+                <ion-icon name="power-outline"></ion-icon>
+              </div>
+            </div>
             <div
               class="button sty-btn-item-details px-6"
               id="btn_retrieve_item"
@@ -266,6 +285,39 @@
         <footer class="modal-card-foot"></footer>
       </div>
     </div>
+
+    <div class="modal" id="mdl_logout">
+      <div class="modal-background" onclick="mdl_logout_close()"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p
+            class="modal-card-title has-text-centered sty-mdl-app-deni-header-dashboard"
+          >
+            Logout
+          </p>
+          <button
+            class="delete"
+            aria-label="close"
+            onclick="mdl_logout_close()"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div
+            class="sty-base-smaller-fz has-text-centered sty-mdl-app-deni-subheader-dashboard"
+          >
+            <h1>Are you sure you want to logout?</h1>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <div class="sty-mdl-btn-dashboard-center">
+            <a class="button is-success" href="{% url 'main:admin_login' %}">
+              Logout
+            </a>
+          </div>
+        </footer>
+      </div>
+    </div>
+
     <!-- prettier-ignore -->
     {% endblock content %}
     <!-- //prettier-ignore -->
@@ -438,6 +490,17 @@
           }
         });
       });
+      // LOGOUT
+      let btn_logout_submit = document.getElementById("btn_logout_submit");
+      let btn_logout = document.getElementById("btn_logout");
+      let mdl_logout = document.getElementById("mdl_logout");
+      btn_logout.addEventListener("click", () => {
+        mdl_logout.classList.add("is-active");
+      });
+      function mdl_logout_close() {
+        mdl_logout.classList.remove("is-active");
+      }
+
       //{% endblock scripts %}
     </script>
   </body>

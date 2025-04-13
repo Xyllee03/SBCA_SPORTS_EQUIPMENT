@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import json
 from django.http import JsonResponse
 from .models import ItemRequest, StudentBorrow, UserSites, REQUESTAPPROVE 
@@ -203,6 +203,9 @@ def admin_login(request):
 
     return render(request,"main/administration_SBCA/admin_login.html", context)
 
+def admin_logout(request):
+    logout(request)
+    return redirect("/admin-login/")
 
 @login_required
 def admin_dashboard(request):
