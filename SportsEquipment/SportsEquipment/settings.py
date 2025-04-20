@@ -149,5 +149,5 @@ AUTHENTICATION_BACKENDS = [
 #AUTH_USER_MODEL =   'main.models.UserSiteManager',
 
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS =config("ALLOWED_HOST").split(" ")
