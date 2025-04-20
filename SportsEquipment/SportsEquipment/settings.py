@@ -74,46 +74,23 @@ WSGI_APPLICATION = 'SportsEquipment.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-"""
 
+"""  # uncomment this if you want to run the system locally
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SBCA_SportsEquipment',
-        'USER': 'postgres',
-        'PASSWORD': 'AudiAudi10*',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'adminsbca_sportsequipment',
-        'USER': 'root',
-        'PASSWORD': '123',  # Default is empty in XAMPP
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
-"""
-""""""
+""" 
+# Remove this if you don't have existing database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config("DB_NAME"),
         'USER': config("DB_USER"),
         'PASSWORD': config("DB_PASSWORD"),
-        'HOST': config("DB_HOST"),  # e.g., 'srv123.main-hosting.eu' or an IP address
+        'HOST': config("DB_HOST"), 
         'PORT': '3306',
             }
 }
@@ -172,5 +149,5 @@ AUTHENTICATION_BACKENDS = [
 #AUTH_USER_MODEL =   'main.models.UserSiteManager',
 
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS =config("ALLOWED_HOST").split(" ")
