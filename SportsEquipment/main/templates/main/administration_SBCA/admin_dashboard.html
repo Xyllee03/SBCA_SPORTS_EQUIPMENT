@@ -113,6 +113,21 @@
       color: rgb(52, 73, 237);
       cursor: pointer;
     }
+    @media (max-width: 768px) {
+      .sty-app-del-icon {
+        font-size: 17px !important;
+      }
+      .code-prio {
+        font-size: 20px !important;
+      }
+      .sty_logoutbtn-dashboard {
+        font-size: 25px;
+        width: 55px;
+      }
+      .sty-recent-app-list-dashboard {
+        font-size: 19px;
+      }
+    }
     /* {% endblock styles %}*/
   </style>
   <body>
@@ -136,14 +151,14 @@
             />
           </div>
           {% for request in user_request %}
-          <div class="columns is-vcentered" id="filter_inp_list">
+          <div class="columns is-vcentered is-mobile" id="filter_inp_list">
             <div class="column is-7">
               <a
                 href="/admin-check-request/{{ request.code_request }}"
                 class=""
               >
                 <h1
-                  class="sty-basesubheader-fz sty-base-montserrat-fm sty-pending-list"
+                  class="sty-basesubheader-fz code-prio sty-base-montserrat-fm sty-pending-list"
                 >
                   {{ request.code_request }}
                 </h1>

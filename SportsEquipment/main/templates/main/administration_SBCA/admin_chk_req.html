@@ -33,6 +33,15 @@
         font-weight: 600 !important;
         color: black !important;
       }
+      .code-mobile {
+        font-size: 38px;
+      }
+      @media (max-width: 768px) {
+        .code-mobile {
+          font-size: 30px;
+        }
+      }
+
       /* {% endblock styles %}*/
     </style>
   </head>
@@ -41,9 +50,7 @@
     {% block content %}
     <!-- //prettier-ignore -->
     <div class="container has-text-centered sty_bkg_chkreq px-6 pt-6">
-      <h1
-        class="sty-base-header-little-big-fz sty-base-montserrat-fm sty-header-chkreq mb-4"
-      >
+      <h1 class="sty-base-montserrat-fm sty-header-chkreq mb-4 code-mobile">
         Request Code#: {{ get_user.code_request }}
       </h1>
       <h1
